@@ -1,0 +1,25 @@
+{
+  "summary": "First-finish frontend smoke test for Al Alam Pools landing page (mobile 430x932). All critical flows verified: page load, hero CTAs, language toggle (LTR↔RTL), mobile menu, 9 service cards, trust/spotlight/process/results/testimonials sections, contact form validation + success state, footer, floating WhatsApp.",
+  "tested_scope": ["frontend"],
+  "passed": [
+    "Page loads at https://aqua-luxury-6.preview.emergentagent.com without console errors",
+    "Hero badge, headline, and both CTAs visible; WhatsApp href = https://wa.me/966500000000?...",
+    "Hero 'Get Free Quote' CTA smoothly scrolls to contact-section (y≈0 in viewport)",
+    "Language toggle switches document dir from ltr → rtl correctly",
+    "Mobile menu opens and exposes menu-quote button",
+    "trust-section, spotlight-section, process-section all visible",
+    "Exactly 9 service cards rendered (service-card-0..8)",
+    "Results slider exists and result-metric-0 renders",
+    "Testimonials next/prev cycle works without error",
+    "Empty form submit shows toast: 'Please fill name and phone'",
+    "Filled form (name + phone + service) submit shows form-success state with 'Thank you — we'll be in touch shortly.' + toast",
+    "Footer shows +966 50 000 0000, info@alalampools.sa, Riyadh • Jeddah • Dammam • Kingdom-wide",
+    "Floating WhatsApp button visible with correct wa.me/966500000000 href",
+    "No JS console errors during full interaction flow"
+  ],
+  "failed": [],
+  "action_items": [],
+  "success_rate": {"backend": "N/A (skipped)", "frontend": "100%"},
+  "retest_needed": false,
+  "full_testing_deferred": true
+}

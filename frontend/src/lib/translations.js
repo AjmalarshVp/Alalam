@@ -1,0 +1,229 @@
+export const translations = {
+  en: {
+    dir: "ltr",
+    nav: { quote: "Get Quote", services: "Services", process: "Process", contact: "Contact" },
+    hero: {
+      badge: "Saudi Arabia's Premier Pool Experts",
+      headline: ["Pure Serenity,", "Expertly Maintained."],
+      sub: "Elevate your outdoor lifestyle with Saudi Arabia's elite swimming pool care — from crystal-clear maintenance to bespoke luxury installations.",
+      ctaPrimary: "Get Free Quote",
+      ctaWhatsapp: "WhatsApp Us",
+      microTrust: "Trusted by villas, hotels & resorts across the Kingdom",
+    },
+    trust: {
+      overline: "Why Al Alam",
+      title: "Quiet luxury, kept crystal clear.",
+      items: [
+        { stat: "12+", label: "Years of Pool Expertise" },
+        { stat: "850+", label: "Premium Properties Served" },
+        { stat: "24h", label: "Rapid Response Team" },
+        { stat: "100%", label: "Saudi-Based Specialists" },
+      ],
+    },
+    services: {
+      overline: "Everything your pool needs",
+      title: "A full spectrum of care, in one trusted partner.",
+      sub: "From routine balance to architectural installations — handled by certified pool engineers.",
+      list: [
+        { name: "Pool Cleaning", desc: "Vacuum, brush, skim — weekly ritual." },
+        { name: "Water Treatment", desc: "Balanced chemistry, crystal clarity." },
+        { name: "Filter Servicing", desc: "Cartridges, sand & DE maintained." },
+        { name: "Tile Cleaning", desc: "Calcium & grout restored to new." },
+        { name: "Leak Inspection", desc: "Pressure & dye diagnostics." },
+        { name: "Pump Maintenance", desc: "Efficient, silent circulation." },
+        { name: "Pool Installation", desc: "Bespoke design & build." },
+        { name: "Deep Cleaning", desc: "Drain, acid wash, refill." },
+        { name: "AMC Support", desc: "Annual contracts for peace of mind." },
+      ],
+    },
+    spotlight: {
+      overline: "Signature Care",
+      items: [
+        {
+          tag: "Maintenance",
+          title: "Crystal-clear water, every visit.",
+          body: "Weekly and bi-weekly programs designed around your pool's chemistry, finish and bather load. We arrive on time, in uniform, with calibrated tools.",
+          cta: "Talk to an expert",
+        },
+        {
+          tag: "Installation",
+          title: "Pools designed like architecture.",
+          body: "From infinity edges to plunge pools, we partner with leading villa architects to deliver pools that feel inevitable — and last for decades.",
+          cta: "Plan my pool",
+        },
+      ],
+    },
+    process: {
+      overline: "How it works",
+      title: "Four steps. One serene pool.",
+      steps: [
+        { n: "01", t: "Share Pool Details", d: "Tell us about your pool, location and what's bothering you." },
+        { n: "02", t: "Get Expert Inspection", d: "Our specialist visits and audits the water, surfaces and equipment." },
+        { n: "03", t: "Receive Quote", d: "A transparent, itemised proposal — no hidden fees." },
+        { n: "04", t: "Enjoy a Clean Pool", d: "Sit back. We arrive on schedule and keep it pristine." },
+      ],
+    },
+    results: {
+      overline: "Real transformations",
+      title: "Dull to dazzling, in a single visit.",
+      sub: "Slide across to see what our deep restorations look like in Riyadh, Jeddah and Dhahran villas.",
+      beforeLabel: "Before",
+      afterLabel: "After",
+      metrics: [
+        { v: "+98%", l: "clarity restored" },
+        { v: "−3.2", l: "pH corrected" },
+        { v: "4 hrs", l: "average turnaround" },
+      ],
+    },
+    testimonials: {
+      overline: "Client voices",
+      title: "Quietly trusted by the Kingdom's most discerning homes.",
+      list: [
+        { q: "Our infinity pool has never looked this alive. The team is meticulous, punctual, and almost invisible — exactly what we wanted.", n: "Faisal A.", r: "Private Villa, Riyadh" },
+        { q: "We switched from a large operator to Al Alam and never looked back. The water clarity at our resort improved within two weeks.", n: "Layla M.", r: "Boutique Resort, Jeddah" },
+        { q: "They redesigned our pool plant room and cut our chemical bill by a third. Genuinely professional engineers.", n: "Omar K.", r: "Luxury Compound, Dhahran" },
+      ],
+    },
+    cta: {
+      overline: "Ready when you are",
+      title: "Let's make your pool feel new again.",
+      sub: "Free inspection across Riyadh, Jeddah, Dammam and surrounding areas.",
+    },
+    form: {
+      title: "Request a free quote",
+      sub: "A specialist will call you back within one business hour.",
+      name: "Full name",
+      phone: "Phone (+966 …)",
+      service: "Select a service",
+      message: "Tell us about your pool (optional)",
+      submit: "Send request",
+      sending: "Sending…",
+      success: "Thank you — we'll be in touch shortly.",
+      whatsappAlt: "Or message us on WhatsApp",
+    },
+    footer: {
+      tagline: "Saudi Arabia's premier pool care studio. Quiet, certified, and crystal clear.",
+      contact: "Contact",
+      addressLabel: "Service area",
+      address: "Riyadh • Jeddah • Dammam • Kingdom-wide",
+      rights: "All rights reserved.",
+      quick: "Quick links",
+    },
+  },
+  ar: {
+    dir: "rtl",
+    nav: { quote: "اطلب عرضاً", services: "الخدمات", process: "كيف نعمل", contact: "تواصل" },
+    hero: {
+      badge: "خبراء المسابح الأوائل في المملكة العربية السعودية",
+      headline: ["صفاءٌ نقي،", "بعنايةٍ احترافية."],
+      sub: "ارتقِ بأسلوب حياتك الخارجي مع نخبة العناية بحمامات السباحة في المملكة — من الصيانة الفائقة إلى التركيبات الفاخرة المصممة خصيصاً.",
+      ctaPrimary: "احصل على عرض مجاني",
+      ctaWhatsapp: "تواصل عبر واتساب",
+      microTrust: "موثوقون من قِبَل الفلل والفنادق والمنتجعات في أنحاء المملكة",
+    },
+    trust: {
+      overline: "لماذا العالَم",
+      title: "فخامةٌ هادئة، تبقى دائماً صافية.",
+      items: [
+        { stat: "+12", label: "عاماً من الخبرة" },
+        { stat: "+850", label: "عقاراً فاخراً تمت خدمته" },
+        { stat: "24س", label: "فريق استجابة سريع" },
+        { stat: "100%", label: "متخصصون سعوديون" },
+      ],
+    },
+    services: {
+      overline: "كل ما يحتاجه مسبحك",
+      title: "خدمات متكاملة مع شريكٍ واحدٍ موثوق.",
+      sub: "من المعالجة الدورية إلى التركيبات المعمارية — على يد مهندسي مسابح معتمدين.",
+      list: [
+        { name: "تنظيف المسبح", desc: "تنظيف وتعقيم أسبوعي." },
+        { name: "معالجة المياه", desc: "كيمياء متوازنة وصفاء تام." },
+        { name: "صيانة الفلاتر", desc: "خراطيش ورمل ومرشحات." },
+        { name: "تنظيف البلاط", desc: "إزالة الكلس وإعادة اللمعان." },
+        { name: "فحص التسربات", desc: "تشخيص بالضغط والصبغة." },
+        { name: "صيانة المضخات", desc: "تدوير صامت وفعّال." },
+        { name: "تركيب المسابح", desc: "تصميم وتنفيذ مخصص." },
+        { name: "تنظيف عميق", desc: "تفريغ وغسل وإعادة تعبئة." },
+        { name: "عقود سنوية", desc: "راحة بالٍ على مدار العام." },
+      ],
+    },
+    spotlight: {
+      overline: "العناية المميزة",
+      items: [
+        {
+          tag: "الصيانة",
+          title: "مياه صافية كالكريستال في كل زيارة.",
+          body: "برامج أسبوعية ونصف شهرية مصممة لكيمياء مسبحك ونوع تشطيبه. نصل في الوقت المحدد، بزيٍّ رسمي، وبأدواتٍ معايرة.",
+          cta: "تحدث مع خبير",
+        },
+        {
+          tag: "التركيب",
+          title: "مسابح بتصميمٍ معماري.",
+          body: "من الحواف اللانهائية إلى أحواض الغطس، نتعاون مع كبار مهندسي الفلل لتنفيذ مسابح تدوم لعقود.",
+          cta: "خطط لمسبحي",
+        },
+      ],
+    },
+    process: {
+      overline: "كيف نعمل",
+      title: "أربع خطوات. مسبحٌ نقي.",
+      steps: [
+        { n: "01", t: "شارك التفاصيل", d: "أخبرنا عن مسبحك وموقعه وما يشغلك." },
+        { n: "02", t: "فحص ميداني", d: "يزورك مختصنا لفحص المياه والأسطح والمعدات." },
+        { n: "03", t: "استلم العرض", d: "عرض شفاف ومفصّل بدون رسوم خفية." },
+        { n: "04", t: "استمتع بمسبحك", p: "نحضر في موعدنا، ونحافظ على نقائه." },
+      ],
+    },
+    results: {
+      overline: "تحولات حقيقية",
+      title: "من البهتان إلى البريق، في زيارة واحدة.",
+      sub: "اسحب لترى نتائج إعادة الترميم في فلل الرياض وجدة والظهران.",
+      beforeLabel: "قبل",
+      afterLabel: "بعد",
+      metrics: [
+        { v: "+98%", l: "صفاءٌ مُستعاد" },
+        { v: "−3.2", l: "تصحيح الحموضة" },
+        { v: "4 ساعات", l: "متوسط الإنجاز" },
+      ],
+    },
+    testimonials: {
+      overline: "آراء العملاء",
+      title: "نخدم بهدوء أكثر البيوت السعودية تميزاً.",
+      list: [
+        { q: "مسبحنا اللانهائي لم يبدُ بهذا الجمال من قبل. الفريق دقيق ومنضبط، وحضوره يكاد يكون غير محسوس.", n: "فيصل العتيبي", r: "فيلا خاصة، الرياض" },
+        { q: "انتقلنا من شركة كبيرة إلى العالَم ولم نندم. تحسّن صفاء المياه في منتجعنا خلال أسبوعين.", n: "ليلى المالكي", r: "منتجع بوتيك، جدة" },
+        { q: "أعادوا تصميم غرفة المعدات وخفضوا فاتورة المواد الكيميائية بالثلث. مهندسون محترفون فعلاً.", n: "عمر الخالدي", r: "مجمع فاخر، الظهران" },
+      ],
+    },
+    cta: {
+      overline: "نحن جاهزون حين تكون كذلك",
+      title: "لنُعِد لمسبحك بريقه الأول.",
+      sub: "فحص مجاني في الرياض وجدة والدمام وما حولها.",
+    },
+    form: {
+      title: "اطلب عرضاً مجانياً",
+      sub: "سيتصل بك أحد المختصين خلال ساعة عمل واحدة.",
+      name: "الاسم الكامل",
+      phone: "رقم الجوال (+966 …)",
+      service: "اختر الخدمة",
+      message: "أخبرنا عن مسبحك (اختياري)",
+      submit: "إرسال الطلب",
+      sending: "جارٍ الإرسال…",
+      success: "شكراً لك — سنتواصل معك قريباً.",
+      whatsappAlt: "أو راسلنا على واتساب",
+    },
+    footer: {
+      tagline: "استوديو العناية الأول بالمسابح في المملكة. هادئون، معتمدون، ونقاءٌ تام.",
+      contact: "تواصل",
+      addressLabel: "نطاق الخدمة",
+      address: "الرياض • جدة • الدمام • المملكة كاملة",
+      rights: "جميع الحقوق محفوظة.",
+      quick: "روابط سريعة",
+    },
+  },
+};
+
+export const WHATSAPP_NUMBER = "966500000000";
+export const WHATSAPP_LINK = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent("Hello Al Alam Pools, I'd like a free quote.")}`;
+export const PHONE_DISPLAY = "+966 50 000 0000";
+export const EMAIL = "info@alalampools.sa";
