@@ -1,0 +1,127 @@
+{
+  "project_overview": {
+    "brand_name": "Al Alam Pools",
+    "domain": "Luxury Pool Cleaning, Maintenance & Installation",
+    "target_audience": "Premium homeowners, villa owners, hotels in Saudi Arabia",
+    "theme_archetype": "Archetype 5: Luxury (Dark/Cinematic Hybrid)",
+    "mood": "Luxury, calm, premium, trustworthy, aquatic elegance",
+    "tech_stack": "React, Tailwind CSS, Framer Motion (Use .js/.jsx extensions, not .tsx)"
+  },
+  "design_system": {
+    "colors": {
+      "background": {
+        "primary": "#040B16",
+        "secondary": "#0A1428",
+        "glass": "rgba(10, 20, 40, 0.65)"
+      },
+      "text": {
+        "primary": "#FFFFFF",
+        "secondary": "#94A3B8",
+        "accent": "#4FACFE"
+      },
+      "brand": {
+        "aqua": "#00E5FF",
+        "deep_blue": "#0A2540",
+        "cyan": "#4FACFE"
+      },
+      "status": {
+        "whatsapp_green": "#25D366"
+      }
+    },
+    "typography": {
+      "fonts": {
+        "heading_en": "'Playfair Display', serif",
+        "heading_ar": "'Amiri', serif",
+        "body_en": "'Manrope', sans-serif",
+        "body_ar": "'Tajawal', sans-serif"
+      },
+      "hierarchy": {
+        "h1": "text-4xl sm:text-5xl lg:text-6xl tracking-tight leading-tight font-medium",
+        "h2": "text-2xl sm:text-3xl lg:text-4xl tracking-tight leading-snug font-medium",
+        "h3": "text-xl sm:text-2xl font-medium",
+        "body": "text-base text-slate-300 leading-relaxed",
+        "overline": "text-xs uppercase tracking-[0.2em] text-cyan-400 font-semibold"
+      }
+    },
+    "spacing_and_layout": {
+      "mobile_first_padding": "px-6 py-16 sm:px-8 sm:py-24",
+      "grid_gaps": "gap-6 sm:gap-8",
+      "border_radius": "rounded-2xl sm:rounded-3xl",
+      "surfaces": {
+        "glassmorphism": "backdrop-blur-xl bg-white/5 border border-white/10 shadow-[0_8px_32px_rgba(0,180,255,0.05)]",
+        "solid_card": "bg-[#0A1428] border border-white/5 shadow-lg"
+      }
+    },
+    "motion": {
+      "scroll_reveal": "Fade up with y: 20, opacity: 0, duration: 0.6, ease: easeOut",
+      "water_shimmer": "Continuous slow background gradient translation or abstract water image with slow pan",
+      "hover_states": "scale-[1.02] border-cyan/40 transition-all duration-300",
+      "pulse_cta": "Continuous drop-shadow/ring pulse on WhatsApp button"
+    }
+  },
+  "components_and_sections": [
+    {
+      "name": "Header & Nav",
+      "layout": "Fixed, top-0, z-50, w-full, glassmorphism surface. py-4 px-6.",
+      "elements": "Brand Logo (Text/Icon), EN/AR Language Toggle, Get Quote CTA on desktop."
+    },
+    {
+      "name": "Premium Hero",
+      "layout": "min-h-[85vh] relative flex flex-col justify-center items-center text-center px-6 pt-24 pb-12",
+      "elements": "Background image with bg-black/50 overlay for text contrast. Overline Badge ('Saudi Arabia's Premier Pool Experts' inside glass pill). H1 ('Pure Serenity, Expertly Maintained.'). Subtext. Dual CTAs (Solid Cyan 'Get Free Quote' & Outline 'WhatsApp Us'). Soft cyan radial glow behind text.",
+      "images": ["https://images.unsplash.com/photo-1727579674528-600120447183?crop=entropy&cs=srgb&fm=jpg&ixid=M3w4NjA1NzR8MHwxfHNlYXJjaHwzfHxsdXh1cnklMjBzd2ltbWluZyUyMHBvb2x8ZW58MHx8fHwxNzgyMzI0MDYzfDA&ixlib=rb-4.1.0&q=85"]
+    },
+    {
+      "name": "Trust / Why Choose Us",
+      "layout": "Grid cols-2 lg:grid-cols-4 gap-4 mobile: px-6 py-12",
+      "elements": "4 Stat/Trust Cards (Years of Expertise, Premium Clients, Fast Response, Saudi-Based). Deep navy solid card bg, 1px cyan border on hover, large number/icon typography."
+    },
+    {
+      "name": "Services Overview",
+      "layout": "Grid cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 px-6 py-16",
+      "elements": "9 Cards: Pool Cleaning, Water Treatment, Filter Servicing, Tile Cleaning, Leak Inspection, Pump Maintenance, Pool Installation, Deep Cleaning, AMC Support. Lucide React Icons + Title + Short Desc. Glassmorphism styling."
+    },
+    {
+      "name": "Featured Services Highlight",
+      "layout": "Stacked large cards with overlapping text boxes. min-h-[400px] per highlight.",
+      "elements": "High-res image filling the card, gradient overlay from bottom, large white text. Highlights: Maintenance & Installation.",
+      "images": ["https://images.unsplash.com/photo-1680609989998-6183fcea718b?crop=entropy&cs=srgb&fm=jpg&ixid=M3w4NjA1NzR8MHwxfHNlYXJjaHwyfHxsdXh1cnklMjBzd2ltbWluZyUyMHBvb2x8ZW58MHx8fHwxNzgyMzI0MDYzfDA&ixlib=rb-4.1.0&q=85"]
+    },
+    {
+      "name": "Process Timeline",
+      "layout": "Vertical line on left (logical start), staggered items on right. px-6 py-16.",
+      "elements": "4 Steps: Share Pool Details -> Get Expert Inspection -> Receive Quote -> Enjoy a Clean Pool. Cyan dot indicators. Minimalist tech/luxury feel."
+    },
+    {
+      "name": "Results (Before / After)",
+      "layout": "Image comparison slider or stacked cards.",
+      "elements": "Showcase clean pools using abstract water textures and luxury villa images.",
+      "images": ["https://images.pexels.com/photos/16573669/pexels-photo-16573669.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940", "https://images.unsplash.com/photo-1572557798994-41431698dc8d?crop=entropy&cs=srgb&fm=jpg&ixid=M3w4NjA2MDV8MHwxfHNlYXJjaHwzfHxhYnN0cmFjdCUyMHdhdGVyJTIwdGV4dHVyZSUyMGJsdWV8ZW58MHx8fHwxNzgyMzI0MDYzfDA&ixlib=rb-4.1.0&q=85"]
+    },
+    {
+      "name": "Testimonials",
+      "layout": "Single card carousel / horizontal snap scroll on mobile.",
+      "elements": "Gold/Cyan stars, Quote mark icon, Italic text, Client name (Villa/Hotel context)."
+    },
+    {
+      "name": "Contact / Quote Form",
+      "layout": "Form inside a glassmorphic card. Scroll target for 'Get Free Quote'.",
+      "elements": "Inputs for Name, Phone, Service Select, Message. Submit button (shows success toast using Sonner). Frontend only."
+    },
+    {
+      "name": "Footer & Floating CTA",
+      "layout": "Dark minimal footer + Fixed bottom-right sticky button.",
+      "elements": "Footer: Logo, Contact placeholders (+966 XX XXX XXXX, info@alalampools.sa), location. Floating CTA: WhatsApp icon, green bg, continuous subtle pulse animation."
+    }
+  ],
+  "accessibility_and_testing": {
+    "testing_attributes": "All interactive elements MUST have data-testid attributes (e.g., 'lang-toggle', 'quote-form-submit', 'whatsapp-float-btn', 'service-card').",
+    "rtl_support": "Use 'dir=\"rtl\"' on the main container when Arabic is active. Use Tailwind logical properties (e.g., ms-4, pe-4, space-x-reverse, text-start) to ensure layouts flip correctly automatically without media query hacks."
+  },
+  "asset_library": {
+    "hero_pool": "https://images.unsplash.com/photo-1727579674528-600120447183?crop=entropy&cs=srgb&fm=jpg&ixid=M3w4NjA1NzR8MHwxfHNlYXJjaHwzfHxsdXh1cnklMjBzd2ltbWluZyUyMHBvb2x8ZW58MHx8fHwxNzgyMzI0MDYzfDA&ixlib=rb-4.1.0&q=85",
+    "abstract_water": "https://images.unsplash.com/photo-1572557798994-41431698dc8d?crop=entropy&cs=srgb&fm=jpg&ixid=M3w4NjA2MDV8MHwxfHNlYXJjaHwzfHxhYnN0cmFjdCUyMHdhdGVyJTIwdGV4dHVyZSUyMGJsdWV8ZW58MHx8fHwxNzgyMzI0MDYzfDA&ixlib=rb-4.1.0&q=85",
+    "villa_architecture": "https://images.pexels.com/photos/16573669/pexels-photo-16573669.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
+    "indoor_pool": "https://images.unsplash.com/photo-1680609989998-6183fcea718b?crop=entropy&cs=srgb&fm=jpg&ixid=M3w4NjA1NzR8MHwxfHNlYXJjaHwyfHxsdXh1cnklMjBzd2ltbWluZyUyMHBvb2x8ZW58MHx8fHwxNzgyMzI0MDYzfDA&ixlib=rb-4.1.0&q=85"
+  }
+}
