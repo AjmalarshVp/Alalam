@@ -6,7 +6,7 @@ const Process = ({ t }) => {
     <section
       data-testid="process-section"
       id="process"
-      className="relative py-20 px-6 overflow-hidden"
+      className="relative py-12 px-6 overflow-hidden"
     >
       <div className="absolute inset-x-0 -top-24 h-96 aa-radial-glow-soft opacity-80 pointer-events-none" />
 

@@ -6,7 +6,7 @@ const ICONS = [Award, Clock, Zap, MapPin];
 
 const TrustStats = ({ t }) => {
   return (
-    <section data-testid="trust-section" className="relative py-20 px-6">
+    <section data-testid="trust-section" className="relative py-12 px-6">
       <div className="max-w-md mx-auto">
         <Reveal>
           <span className="aa-overline left-only">{t.trust.overline}</span>

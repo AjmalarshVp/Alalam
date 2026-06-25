@@ -1,34 +1,64 @@
 import React from "react";
 import { motion } from "framer-motion";
-import { ArrowRight, MessageCircle, Sparkles, ShieldCheck, Star } from "lucide-react";
+import {
+  ArrowRight,
+  MessageCircle,
+  Sparkles,
+  ShieldCheck,
+  Star,
+  Check,
+  CalendarCheck,
+} from "lucide-react";
 import { WHATSAPP_LINK } from "../../lib/translations";
 
+// Deep twilight luxury pool — dark blue tones for strong text contrast
 const HERO_IMG =
-  "https://images.unsplash.com/photo-1727579674528-600120447183?crop=entropy&cs=srgb&fm=jpg&ixid=M3w4NjA1NzR8MHwxfHNlYXJjaHwzfHxsdXh1cnklMjBzd2ltbWluZyUyMHBvb2x8ZW58MHx8fHwxNzgyMzI0MDYzfDA&ixlib=rb-4.1.0&q=85";
+  "https://images.unsplash.com/photo-1582719508461-905c673771fd?auto=format&fit=crop&w=1400&q=85";
 
 const Hero = ({ t, scrollTo }) => {
   return (
     <section
       data-testid="hero-section"
       id="top"
-      className="relative min-h-[100svh] w-full overflow-hidden pt-24 pb-14"
+      className="relative min-h-[100svh] w-full overflow-hidden pt-20 pb-10"
     >
-      {/* Pool image */}
+      {/* Background pool image with slow pan */}
       <div className="absolute inset-0 z-0 overflow-hidden">
         <div className="absolute inset-0 aa-pan will-change-transform">
           <img
             src={HERO_IMG}
-            alt="Luxury pool"
+            alt="Luxury twilight pool"
             className="w-full h-full object-cover"
             loading="eager"
           />
         </div>
-        {/* dark gradient overlay — lighter at top, opaque toward bottom */}
-        <div className="absolute inset-0 bg-gradient-to-b from-[#040B16]/30 via-[#040B16]/55 to-[#040B16]" />
-        <div className="absolute inset-0 bg-gradient-to-r from-[#040B16]/35 via-transparent to-[#040B16]/20" />
-        {/* radial cyan glow */}
-        <div className="absolute -bottom-20 left-1/2 -translate-x-1/2 w-[120%] h-[60%] aa-radial-glow opacity-90" />
-        {/* floating shimmer dots */}
+
+        {/* Strong dark overlay tuned for text contrast on any background */}
+        <div className="absolute inset-0 bg-gradient-to-b from-[#020812]/75 via-[#040B16]/65 to-[#040B16]" />
+        <div className="absolute inset-0 bg-gradient-to-r from-[#04111F]/55 via-transparent to-[#04111F]/45" />
+
+        {/* Animated water shimmer — SVG noise displacement */}
+        <svg className="absolute inset-0 w-full h-full opacity-25 mix-blend-screen pointer-events-none">
+          <defs>
+            <filter id="hero-water">
+              <feTurbulence type="fractalNoise" baseFrequency="0.008 0.018" numOctaves="2" seed="2">
+                <animate
+                  attributeName="baseFrequency"
+                  dur="22s"
+                  values="0.008 0.018;0.014 0.026;0.008 0.018"
+                  repeatCount="indefinite"
+                />
+              </feTurbulence>
+              <feColorMatrix values="0 0 0 0 0.12  0 0 0 0 0.78  0 0 0 0 0.95  0 0 0 0.45 0" />
+            </filter>
+          </defs>
+          <rect width="100%" height="100%" filter="url(#hero-water)" />
+        </svg>
+
+        {/* Radial aqua glow at bottom */}
+        <div className="absolute -bottom-24 left-1/2 -translate-x-1/2 w-[140%] h-[55%] aa-radial-glow opacity-90" />
+
+        {/* Floating shimmer particles */}
         <div className="absolute inset-0 pointer-events-none">
           {[
             { l: "12%", t: "28%", s: 4, d: "0s" },
@@ -39,7 +69,7 @@ const Hero = ({ t, scrollTo }) => {
           ].map((p, i) => (
             <span
               key={i}
-              className="absolute rounded-full bg-cyan-200/70 aa-float blur-[1px]"
+              className="absolute rounded-full bg-cyan-200/80 aa-float blur-[1px]"
               style={{
                 left: p.l,
                 top: p.t,
@@ -52,19 +82,20 @@ const Hero = ({ t, scrollTo }) => {
         </div>
       </div>
 
-      <div className="relative z-10 max-w-md mx-auto px-6 flex flex-col items-start min-h-[calc(100svh-96px)]">
+      {/* Hero content */}
+      <div className="relative z-10 max-w-md mx-auto px-6 flex flex-col items-start min-h-[calc(100svh-80px)]">
         {/* Badge */}
         <motion.div
-          initial={{ opacity: 0, y: 16 }}
+          initial={{ opacity: 0, y: 14 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.7, ease: "easeOut" }}
-          className="mt-6"
+          className="mt-4"
         >
           <span
             data-testid="hero-badge"
-            className="inline-flex items-center gap-2 aa-glass-soft rounded-full ps-2.5 pe-3.5 py-1.5 text-[11px] uppercase tracking-[0.18em] font-semibold text-cyan-200"
+            className="inline-flex items-center gap-2 aa-glass-soft rounded-full ps-2.5 pe-3.5 py-1.5 text-[10.5px] uppercase tracking-[0.18em] font-semibold text-cyan-100"
           >
-            <Sparkles size={12} className="text-cyan-300" />
+            <Sparkles size={11} className="text-cyan-300" />
             {t.hero.badge}
           </span>
         </motion.div>
@@ -72,14 +103,15 @@ const Hero = ({ t, scrollTo }) => {
         {/* Headline */}
         <motion.h1
           data-testid="hero-headline"
-          initial={{ opacity: 0, y: 24 }}
+          initial={{ opacity: 0, y: 22 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.9, delay: 0.12, ease: [0.22, 1, 0.36, 1] }}
-          className="font-display text-[44px] leading-[1.02] sm:text-[56px] font-medium text-white mt-7 tracking-tight"
+          className="font-display text-[40px] leading-[1.02] sm:text-[48px] font-medium text-white mt-4 tracking-tight"
+          style={{ textShadow: "0 4px 24px rgba(0,0,0,0.55)" }}
         >
           <span className="block">{t.hero.headline[0]}</span>
           <span className="block">
-            <em className="not-italic bg-gradient-to-r from-[#7BE5FF] via-[#00E5FF] to-[#4FACFE] bg-clip-text text-transparent">
+            <em className="not-italic bg-gradient-to-r from-[#A8F0FF] via-[#00E5FF] to-[#4FACFE] bg-clip-text text-transparent">
               {t.hero.headline[1]}
             </em>
           </span>
@@ -87,57 +119,104 @@ const Hero = ({ t, scrollTo }) => {
 
         {/* Subtext */}
         <motion.p
-          initial={{ opacity: 0, y: 16 }}
+          initial={{ opacity: 0, y: 14 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, delay: 0.28 }}
-          className="text-[15px] leading-relaxed text-slate-200/85 mt-5 max-w-[34ch]"
+          className="text-[13.5px] leading-relaxed text-slate-100/90 mt-3 max-w-[34ch]"
+          style={{ textShadow: "0 2px 12px rgba(0,0,0,0.5)" }}
         >
           {t.hero.sub}
         </motion.p>
 
-        {/* CTAs */}
+        {/* 9 service pills — staggered reveal */}
+        <motion.ul
+          data-testid="hero-services-pills"
+          initial="hidden"
+          animate="show"
+          variants={{
+            hidden: {},
+            show: { transition: { staggerChildren: 0.04, delayChildren: 0.4 } },
+          }}
+          className="mt-4 grid grid-cols-3 gap-1.5 w-full"
+        >
+          {t.services.list.map((s, i) => (
+            <motion.li
+              key={i}
+              data-testid={`hero-service-pill-${i}`}
+              variants={{
+                hidden: { opacity: 0, y: 10 },
+                show: { opacity: 1, y: 0, transition: { duration: 0.5, ease: "easeOut" } },
+              }}
+              className="aa-glass-soft rounded-full px-2 py-1.5 flex items-center gap-1.5 text-[10px] font-medium text-white/95 leading-none"
+            >
+              <span className="w-3.5 h-3.5 rounded-full bg-cyan-400/25 border border-cyan-300/50 grid place-items-center shrink-0">
+                <Check size={8} className="text-cyan-100" strokeWidth={3} />
+              </span>
+              <span className="truncate">{s.name}</span>
+            </motion.li>
+          ))}
+        </motion.ul>
+
+        {/* CTAs — Book Now primary, Quote secondary, WhatsApp tertiary inline */}
         <motion.div
-          initial={{ opacity: 0, y: 16 }}
+          initial={{ opacity: 0, y: 14 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, delay: 0.42 }}
-          className="mt-8 w-full flex flex-col gap-3"
+          transition={{ duration: 0.8, delay: 0.85 }}
+          className="mt-5 w-full flex flex-col gap-2.5"
         >
           <button
-            data-testid="hero-cta-quote"
+            data-testid="hero-cta-book"
             onClick={() => scrollTo("contact")}
-            className="aa-btn-primary w-full"
+            className="aa-btn-primary w-full relative overflow-hidden aa-shimmer"
           >
+            <CalendarCheck size={17} />
             {t.hero.ctaPrimary}
-            <ArrowRight size={17} />
+            <ArrowRight size={16} />
           </button>
-          <a
-            data-testid="hero-cta-whatsapp"
-            href={WHATSAPP_LINK}
-            target="_blank"
-            rel="noreferrer"
-            className="aa-btn-ghost w-full"
-          >
-            <MessageCircle size={17} />
-            {t.hero.ctaWhatsapp}
-          </a>
+
+          <div className="grid grid-cols-2 gap-2.5">
+            <button
+              data-testid="hero-cta-quote"
+              onClick={() => scrollTo("contact")}
+              className="aa-btn-ghost !py-3 !text-[13px] w-full"
+            >
+              {t.hero.ctaSecondary}
+            </button>
+            <a
+              data-testid="hero-cta-whatsapp"
+              href={WHATSAPP_LINK}
+              target="_blank"
+              rel="noreferrer"
+              className="aa-btn-ghost !py-3 !text-[13px] w-full"
+              style={{
+                borderColor: "rgba(37,211,102,0.45)",
+                color: "#9CE8B6",
+              }}
+            >
+              <MessageCircle size={14} />
+              WhatsApp
+            </a>
+          </div>
         </motion.div>
 
         {/* Micro trust */}
         <motion.div
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
-          transition={{ duration: 1, delay: 0.6 }}
-          className="mt-auto pt-10 w-full"
+          transition={{ duration: 1, delay: 1.0 }}
+          className="mt-auto pt-5 w-full"
         >
-          <div className="flex items-center gap-2 text-[12px] text-slate-300/80">
-            <ShieldCheck size={14} className="text-cyan-300" />
+          <div className="flex items-center gap-2 text-[11px] text-slate-200/80">
+            <ShieldCheck size={13} className="text-cyan-300" />
             <span>{t.hero.microTrust}</span>
           </div>
-          <div className="flex items-center gap-1 mt-2.5">
+          <div className="flex items-center gap-1 mt-1.5">
             {[0, 1, 2, 3, 4].map((i) => (
-              <Star key={i} size={12} className="fill-cyan-300 text-cyan-300" />
+              <Star key={i} size={11} className="fill-cyan-300 text-cyan-300" />
             ))}
-            <span className="text-[11px] text-slate-400 ms-2">4.9 · 320+ reviews</span>
+            <span className="text-[10.5px] text-slate-300 ms-2">
+              4.9 · 320+ reviews
+            </span>
           </div>
         </motion.div>
       </div>

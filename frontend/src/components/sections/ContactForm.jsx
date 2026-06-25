@@ -35,7 +35,7 @@ const ContactForm = ({ t, lang }) => {
     <section
       data-testid="contact-section"
       id="contact"
-      className="relative py-20 px-6"
+      className="relative py-12 px-6"
     >
       <div className="absolute inset-x-0 top-0 h-72 aa-radial-glow-soft pointer-events-none" />
 

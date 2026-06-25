@@ -10,7 +10,7 @@ const Testimonials = ({ t }) => {
   const current = t.testimonials.list[idx];
 
   return (
-    <section data-testid="testimonials-section" className="relative py-20 px-6">
+    <section data-testid="testimonials-section" className="relative py-12 px-6">
       <div className="max-w-md mx-auto">
         <Reveal>
           <span className="aa-overline left-only">

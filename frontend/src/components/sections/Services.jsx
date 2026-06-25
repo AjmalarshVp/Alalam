@@ -29,7 +29,7 @@ const Services = ({ t, scrollTo }) => {
     <section
       data-testid="services-section"
       id="services"
-      className="relative py-20 px-6"
+      className="relative py-12 px-6"
     >
       {/* soft underwater glow */}
       <div className="absolute inset-x-0 top-0 h-72 aa-radial-glow-soft pointer-events-none" />

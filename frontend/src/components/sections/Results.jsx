@@ -22,7 +22,7 @@ const Results = ({ t }) => {
   };
 
   return (
-    <section data-testid="results-section" className="relative py-20 px-6">
+    <section data-testid="results-section" className="relative py-12 px-6">
       <div className="max-w-md mx-auto">
         <Reveal>
           <span className="aa-overline left-only">{t.results.overline}</span>

@@ -10,7 +10,7 @@ const IMAGES = [
 
 const Spotlights = ({ t, scrollTo }) => {
   return (
-    <section data-testid="spotlight-section" className="relative py-16 px-6">
+    <section data-testid="spotlight-section" className="relative py-10 px-6">
       <div className="max-w-md mx-auto">
         <Reveal>
           <span className="aa-overline left-only">{t.spotlight.overline}</span>

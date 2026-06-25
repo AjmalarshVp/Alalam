@@ -5,7 +5,7 @@ import { WHATSAPP_LINK } from "../../lib/translations";
 
 const FinalCTA = ({ t, scrollTo }) => {
   return (
-    <section data-testid="final-cta-section" className="relative py-12 px-6">
+    <section data-testid="final-cta-section" className="relative py-8 px-6">
       <div className="max-w-md mx-auto">
         <Reveal>
           <div className="relative rounded-3xl overflow-hidden aa-glass p-7 aa-shimmer">
@@ -23,7 +23,7 @@ const FinalCTA = ({ t, scrollTo }) => {
 
               <div className="mt-6 flex flex-col gap-3">
                 <button
-                  data-testid="final-cta-quote"
+                  data-testid="final-cta-book"
                   onClick={() => scrollTo("contact")}
                   className="aa-btn-primary w-full"
                 >
