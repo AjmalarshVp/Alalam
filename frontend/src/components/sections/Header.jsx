@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
 import { Logo } from "../AAIcon";
 import { Menu, X, Languages } from "lucide-react";
 
@@ -24,9 +25,9 @@ const Header = ({ lang, setLang, t, scrollTo }) => {
       }`}
     >
       <div className="max-w-md mx-auto px-5 flex items-center justify-between">
-        <a href="#top" data-testid="header-logo" className="shrink-0">
+        <Link to="/" data-testid="header-logo" className="shrink-0">
           <Logo />
-        </a>
+        </Link>
 
         <div className="flex items-center gap-2">
           <button

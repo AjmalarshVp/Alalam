@@ -1,7 +1,7 @@
 import React from "react";
 import { Logo } from "../AAIcon";
 import { Phone, Mail, MapPin, MessageCircle, Instagram, Twitter } from "lucide-react";
-import { WHATSAPP_LINK, PHONE_DISPLAY, EMAIL } from "../../lib/translations";
+import { WHATSAPP_LINK, PHONE_DISPLAY, EMAIL, INSTAGRAM_LINK } from "../../lib/translations";
 
 const Footer = ({ t, scrollTo, year = new Date().getFullYear() }) => {
   return (
@@ -87,7 +87,9 @@ const Footer = ({ t, scrollTo, year = new Date().getFullYear() }) => {
           </div>
           <div className="flex items-center gap-2">
             <a
-              href="#"
+              href={INSTAGRAM_LINK}
+              target="_blank"
+              rel="noreferrer"
               aria-label="Instagram"
               className="w-9 h-9 rounded-full grid place-items-center border border-white/10 text-slate-300 hover:text-cyan-300 hover:border-cyan-400/30 transition"
             >

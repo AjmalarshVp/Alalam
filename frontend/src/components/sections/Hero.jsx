@@ -1,5 +1,6 @@
 import React from "react";
 import { motion } from "framer-motion";
+import { useNavigate } from "react-router-dom";
 import {
   ArrowRight,
   MessageCircle,
@@ -16,6 +17,7 @@ const HERO_IMG =
   "https://images.unsplash.com/photo-1582719508461-905c673771fd?auto=format&fit=crop&w=1400&q=85";
 
 const Hero = ({ t, scrollTo }) => {
+  const navigate = useNavigate();
   return (
     <section
       data-testid="hero-section"
@@ -106,7 +108,7 @@ const Hero = ({ t, scrollTo }) => {
           initial={{ opacity: 0, y: 22 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.9, delay: 0.12, ease: [0.22, 1, 0.36, 1] }}
-          className="font-display text-[40px] leading-[1.02] sm:text-[48px] font-medium text-white mt-4 tracking-tight"
+          className="font-display text-[40px] leading-[1.02] sm:text-[48px] font-medium text-white mt-7 sm:mt-4 tracking-tight"
           style={{ textShadow: "0 4px 24px rgba(0,0,0,0.55)" }}
         >
           <span className="block">{t.hero.headline[0]}</span>
@@ -115,6 +117,9 @@ const Hero = ({ t, scrollTo }) => {
               {t.hero.headline[1]}
             </em>
           </span>
+          {t.hero.headline[2] && (
+            <span className="block">{t.hero.headline[2]}</span>
+          )}
         </motion.h1>
 
         {/* Subtext */}
@@ -137,9 +142,9 @@ const Hero = ({ t, scrollTo }) => {
             hidden: {},
             show: { transition: { staggerChildren: 0.04, delayChildren: 0.4 } },
           }}
-          className="mt-4 grid grid-cols-3 gap-1.5 w-full"
+          className="mt-6 grid grid-cols-2 gap-x-2 gap-y-2.5 sm:grid-cols-3 sm:gap-1.5 w-full mb-1"
         >
-          {t.services.list.map((s, i) => (
+          {t.services.list.slice(0, -1).map((s, i) => (
             <motion.li
               key={i}
               data-testid={`hero-service-pill-${i}`}
@@ -177,7 +182,7 @@ const Hero = ({ t, scrollTo }) => {
           <div className="grid grid-cols-2 gap-2.5">
             <button
               data-testid="hero-cta-quote"
-              onClick={() => scrollTo("contact")}
+              onClick={() => navigate("/packages")}
               className="aa-btn-ghost !py-3 !text-[13px] w-full"
             >
               {t.hero.ctaSecondary}

@@ -50,7 +50,7 @@ const Services = ({ t, scrollTo }) => {
         </Reveal>
 
         <div className="grid grid-cols-2 gap-3.5 mt-9">
-          {t.services.list.map((s, i) => {
+          {t.services.list.slice(0, -1).map((s, i) => {
             const Icon = ICONS[i];
             return (
               <Reveal key={i} delay={0.05 + i * 0.04}>

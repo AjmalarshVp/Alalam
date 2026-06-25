@@ -4,10 +4,10 @@ export const translations = {
     nav: { quote: "Get Quote", services: "Services", process: "Process", contact: "Contact" },
     hero: {
       badge: "Saudi Arabia's Premier Pool Experts",
-      headline: ["Pure Serenity,", "Expertly Maintained."],
-      sub: "Elevate your outdoor lifestyle with Saudi Arabia's elite swimming pool care — from crystal-clear maintenance to bespoke luxury installations.",
+      headline: ["30% Off", "Instant Pool Cleaning", "Book Now"],
+      sub: "Book your pool service today and enjoy fast, professional cleaning with your pool ready in as little as 30 minutes.",
       ctaPrimary: "Book Now",
-      ctaSecondary: "Get Free Quote",
+      ctaSecondary: "Packages",
       ctaWhatsapp: "WhatsApp Us",
       microTrust: "Trusted by villas, hotels & resorts across the Kingdom",
     },
@@ -85,6 +85,57 @@ export const translations = {
         { q: "They redesigned our pool plant room and cut our chemical bill by a third. Genuinely professional engineers.", n: "Omar K.", r: "Luxury Compound, Dhahran" },
       ],
     },
+    packages: {
+      overline: "Pool Care Packages",
+      headline: "Pick a plan that fits your pool.",
+      sub: "Flexible maintenance packages across Riyadh, Jeddah, Dammam and surrounding areas.",
+      note: "Prices shown are placeholders — edit to match your actual rates.",
+      popular: "Most Popular",
+      bookNow: "Book Now",
+      plans: [
+        {
+          label: "Monthly",
+          name: "Care Plan",
+          price: "SAR 1,199",
+          period: "/ month",
+          visits: "1 visit / week",
+          features: [
+            "Water testing & chemical balance",
+            "Surface skimming & debris removal",
+            "Filter & pump check",
+          ],
+          featured: false,
+        },
+        {
+          label: "Quarterly",
+          name: "Refresh Plan",
+          price: "SAR 3,499",
+          period: "/ quarter",
+          visits: "2 visits / week",
+          features: [
+            "Everything in Care Plan",
+            "Deep tile & wall scrubbing",
+            "Equipment inspection report",
+            "Priority booking",
+          ],
+          featured: true,
+        },
+        {
+          label: "Yearly",
+          name: "Complete Plan",
+          price: "SAR 5,499",
+          period: "/ year",
+          visits: "2 visits / week",
+          features: [
+            "Everything in Refresh Plan",
+            "Seasonal deep clean (4× / year)",
+            "Free part replacements",
+            "Dedicated account manager",
+          ],
+          featured: false,
+        },
+      ],
+    },
     cta: {
       overline: "Ready when you are",
       title: "Let's make your pool feel new again.",
@@ -116,10 +167,10 @@ export const translations = {
     nav: { quote: "اطلب عرضاً", services: "الخدمات", process: "كيف نعمل", contact: "تواصل" },
     hero: {
       badge: "خبراء المسابح الأوائل في المملكة العربية السعودية",
-      headline: ["صفاءٌ نقي،", "بعنايةٍ احترافية."],
-      sub: "ارتقِ بأسلوب حياتك الخارجي مع نخبة العناية بحمامات السباحة في المملكة — من الصيانة الفائقة إلى التركيبات الفاخرة المصممة خصيصاً.",
+      headline: ["خصم 30%", "تنظيف فوري للمسبح", "احجز الآن"],
+      sub: "احجز خدمة مسبحك اليوم واستمتع بتنظيف سريع واحترافي مع جاهزية مسبحك في أقل من 30 دقيقة.",
       ctaPrimary: "احجز الآن",
-      ctaSecondary: "احصل على عرض مجاني",
+      ctaSecondary: "الباقات",
       ctaWhatsapp: "تواصل عبر واتساب",
       microTrust: "موثوقون من قِبَل الفلل والفنادق والمنتجعات في أنحاء المملكة",
     },
@@ -197,6 +248,57 @@ export const translations = {
         { q: "أعادوا تصميم غرفة المعدات وخفضوا فاتورة المواد الكيميائية بالثلث. مهندسون محترفون فعلاً.", n: "عمر الخالدي", r: "مجمع فاخر، الظهران" },
       ],
     },
+    packages: {
+      overline: "باقات العناية بالمسبح",
+      headline: "اختر الباقة المناسبة لمسبحك.",
+      sub: "باقات صيانة مرنة في الرياض وجدة والدمام والمناطق المجاورة.",
+      note: "الأسعار المعروضة تقديرية — قم بتعديلها لتتوافق مع أسعارك الفعلية.",
+      popular: "الأكثر طلباً",
+      bookNow: "احجز الآن",
+      plans: [
+        {
+          label: "شهري",
+          name: "باقة الرعاية",
+          price: "١٬١٩٩ ر.س",
+          period: "/ شهر",
+          visits: "زيارة واحدة أسبوعياً",
+          features: [
+            "فحص المياه والتوازن الكيميائي",
+            "إزالة الشوائب والحطام من السطح",
+            "فحص الفلتر والمضخة",
+          ],
+          featured: false,
+        },
+        {
+          label: "ربع سنوي",
+          name: "باقة التجديد",
+          price: "٣٬٤٩٩ ر.س",
+          period: "/ ربع سنة",
+          visits: "زيارتان أسبوعياً",
+          features: [
+            "كل ما في باقة الرعاية",
+            "تنظيف عميق للبلاط والجدران",
+            "تقرير فحص المعدات",
+            "حجز ذو أولوية",
+          ],
+          featured: true,
+        },
+        {
+          label: "سنوي",
+          name: "الباقة الشاملة",
+          price: "٥٬٤٩٩ ر.س",
+          period: "/ سنة",
+          visits: "زيارتان أسبوعياً",
+          features: [
+            "كل ما في باقة التجديد",
+            "تنظيف عميق موسمي (٤ مرات / سنة)",
+            "استبدال القطع مجاناً",
+            "مدير حساب مخصص",
+          ],
+          featured: false,
+        },
+      ],
+    },
     cta: {
       overline: "نحن جاهزون حين تكون كذلك",
       title: "لنُعِد لمسبحك بريقه الأول.",
@@ -225,7 +327,8 @@ export const translations = {
   },
 };
 
-export const WHATSAPP_NUMBER = "966500000000";
+export const WHATSAPP_NUMBER = "966571467576";
 export const WHATSAPP_LINK = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent("Hello Al Alam Pools, I'd like a free quote.")}`;
-export const PHONE_DISPLAY = "+966 50 000 0000";
-export const EMAIL = "info@alalampools.sa";
+export const PHONE_DISPLAY = "+966 57 146 7576";
+export const EMAIL = "alalampool@gmail.com";
+export const INSTAGRAM_LINK = "https://www.instagram.com/alalampools?utm_source=qr";
