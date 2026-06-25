@@ -11,6 +11,10 @@ import {
   CalendarCheck,
 } from "lucide-react";
 import { WHATSAPP_LINK } from "../../lib/translations";
+import { trackButtonClick, trackExternalLink } from "../../lib/analytics";
+import { useSectionView } from "../../hooks/useSectionView";
+import { setBookingContext } from "../../lib/bookingContext";
+import { EVENTS } from "../../lib/analyticsEvents";
 
 // Deep twilight luxury pool — dark blue tones for strong text contrast
 const HERO_IMG =
@@ -18,8 +22,44 @@ const HERO_IMG =
 
 const Hero = ({ t, scrollTo }) => {
   const navigate = useNavigate();
+  const lang = document.documentElement.lang || "en";
+
+  // Track when hero section enters viewport
+  const sectionRef = useSectionView(EVENTS.HERO_SECTION_VIEW, {
+    page: "home",
+    language: lang,
+  });
+
+  const handleBookNow = () => {
+    setBookingContext({ sourcePage: "home", sourceSection: "hero" });
+    trackButtonClick(EVENTS.HERO_BOOK_NOW_CLICK, {
+      language: lang, section: "hero", page: "home",
+    });
+    scrollTo("contact");
+  };
+
+  const handlePackages = () => {
+    trackButtonClick(EVENTS.HERO_PACKAGES_CLICK, {
+      language: lang, section: "hero", page: "home",
+    });
+    navigate("/packages");
+  };
+
+  const handleWhatsApp = () => {
+    trackExternalLink({
+      specificEvent: EVENTS.HERO_WHATSAPP_CLICK,
+      linkName: "hero_whatsapp",
+      linkType: "whatsapp",
+      destinationDomain: "wa.me",
+      page: "home",
+      section: "hero",
+      language: lang,
+    });
+  };
+
   return (
     <section
+      ref={sectionRef}
       data-testid="hero-section"
       id="top"
       className="relative min-h-[100svh] w-full overflow-hidden pt-20 pb-10"
@@ -171,7 +211,7 @@ const Hero = ({ t, scrollTo }) => {
         >
           <button
             data-testid="hero-cta-book"
-            onClick={() => scrollTo("contact")}
+            onClick={handleBookNow}
             className="aa-btn-primary w-full relative overflow-hidden aa-shimmer"
           >
             <CalendarCheck size={17} />
@@ -182,7 +222,7 @@ const Hero = ({ t, scrollTo }) => {
           <div className="grid grid-cols-2 gap-2.5">
             <button
               data-testid="hero-cta-quote"
-              onClick={() => navigate("/packages")}
+              onClick={handlePackages}
               className="aa-btn-ghost !py-3 !text-[13px] w-full"
             >
               {t.hero.ctaSecondary}
@@ -192,6 +232,7 @@ const Hero = ({ t, scrollTo }) => {
               href={WHATSAPP_LINK}
               target="_blank"
               rel="noreferrer"
+              onClick={handleWhatsApp}
               className="aa-btn-ghost !py-3 !text-[13px] w-full"
               style={{
                 borderColor: "rgba(37,211,102,0.45)",

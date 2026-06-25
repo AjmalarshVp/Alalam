@@ -2,10 +2,21 @@ import React from "react";
 import { Logo } from "../AAIcon";
 import { Phone, Mail, MapPin, MessageCircle, Instagram, Twitter } from "lucide-react";
 import { WHATSAPP_LINK, PHONE_DISPLAY, EMAIL, INSTAGRAM_LINK } from "../../lib/translations";
+import { trackExternalLink } from "../../lib/analytics";
+import { useSectionView } from "../../hooks/useSectionView";
+import { EVENTS } from "../../lib/analyticsEvents";
 
 const Footer = ({ t, scrollTo, year = new Date().getFullYear() }) => {
+  const lang = document.documentElement.lang || "en";
+  const page = typeof window !== "undefined" && window.location.pathname === "/packages" ? "packages" : "home";
+  const sectionRef = useSectionView(EVENTS.FOOTER_SECTION_VIEW, { page, language: lang });
+
+  const mkExternal = (specificEvent, linkName, linkType, domain) => () =>
+    trackExternalLink({ specificEvent, linkName, linkType, destinationDomain: domain, page, section: "footer", language: lang });
+
   return (
     <footer
+      ref={sectionRef}
       data-testid="footer-section"
       className="relative pt-12 pb-32 px-6 border-t border-white/5 bg-[#040B16]"
     >
@@ -20,6 +31,7 @@ const Footer = ({ t, scrollTo, year = new Date().getFullYear() }) => {
           target="_blank"
           rel="noreferrer"
           data-testid="footer-whatsapp"
+          onClick={mkExternal(EVENTS.FOOTER_WHATSAPP_CLICK, "footer_whatsapp", "whatsapp", "wa.me")}
           className="aa-btn-wa mt-6 w-full"
         >
           <MessageCircle size={17} />
@@ -36,13 +48,15 @@ const Footer = ({ t, scrollTo, year = new Date().getFullYear() }) => {
             <ul className="mt-3 space-y-2.5 text-[13px] text-slate-300">
               <li className="flex items-center gap-2">
                 <Phone size={13} className="text-cyan-300 shrink-0" />
-                <a href={`tel:${PHONE_DISPLAY.replace(/\s/g, "")}`} data-testid="footer-phone">
+                <a href={`tel:${PHONE_DISPLAY.replace(/\s/g, "")}`} data-testid="footer-phone"
+                  onClick={mkExternal(EVENTS.FOOTER_PHONE_CLICK, "footer_phone", "phone", "tel")}>
                   {PHONE_DISPLAY}
                 </a>
               </li>
               <li className="flex items-center gap-2">
                 <Mail size={13} className="text-cyan-300 shrink-0" />
-                <a href={`mailto:${EMAIL}`} data-testid="footer-email">
+                <a href={`mailto:${EMAIL}`} data-testid="footer-email"
+                  onClick={mkExternal(EVENTS.FOOTER_EMAIL_CLICK, "footer_email", "email", "gmail.com")}>
                   {EMAIL}
                 </a>
               </li>
@@ -91,6 +105,7 @@ const Footer = ({ t, scrollTo, year = new Date().getFullYear() }) => {
               target="_blank"
               rel="noreferrer"
               aria-label="Instagram"
+              onClick={mkExternal(EVENTS.FOOTER_INSTAGRAM_CLICK, "footer_instagram", "social", "instagram.com")}
               className="w-9 h-9 rounded-full grid place-items-center border border-white/10 text-slate-300 hover:text-cyan-300 hover:border-cyan-400/30 transition"
             >
               <Instagram size={14} />

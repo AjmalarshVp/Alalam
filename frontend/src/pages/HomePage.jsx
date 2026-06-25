@@ -1,5 +1,7 @@
-import React, { useState, useCallback } from "react";
+import React, { useState, useCallback, useEffect } from "react";
 import { translations } from "../lib/translations";
+import { trackPageView } from "../lib/analytics";
+import { useScrollDepth } from "../hooks/useScrollDepth";
 import WaterIntro from "../components/WaterIntro";
 import Header from "../components/sections/Header";
 import Hero from "../components/sections/Hero";
@@ -17,6 +19,14 @@ const HomePage = ({ lang, setLang }) => {
     typeof window !== "undefined" && sessionStorage.getItem("aa_intro") === "1"
   );
   const t = translations[lang];
+
+  // Track page view once on mount and on language change
+  useEffect(() => {
+    trackPageView({ pageName: "home", pagePath: "/", language: lang });
+  }, [lang]);
+
+  // Track scroll depth milestones
+  useScrollDepth({ page: "home", pagePath: "/", language: lang });
 
   const scrollTo = useCallback((id) => {
     const el = document.getElementById(id);

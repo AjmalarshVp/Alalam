@@ -1,15 +1,101 @@
-import React from "react";
+import React, { useEffect, useRef } from "react";
 import { motion } from "framer-motion";
 import { Check, ArrowRight, ArrowLeft, Droplets, Star } from "lucide-react";
-import { translations, WHATSAPP_LINK } from "../lib/translations";
+import { translations } from "../lib/translations";
+import { trackPageView, trackButtonClick, trackSectionView } from "../lib/analytics";
+import { setBookingContext } from "../lib/bookingContext";
+import { EVENTS, PACKAGE_BOOK_NOW_EVENTS } from "../lib/analyticsEvents";
+import { useScrollDepth } from "../hooks/useScrollDepth";
+import { useSectionView } from "../hooks/useSectionView";
 import Header from "../components/sections/Header";
 import Footer from "../components/sections/Footer";
 import FloatingWhatsApp from "../components/sections/FloatingWhatsApp";
 import { Reveal } from "../components/Reveal";
 
+// Maps plan index → package metadata for analytics params
+const PLAN_META = [
+  { id: "monthly",   duration: "monthly",   price: "SAR 1,199" },
+  { id: "quarterly", duration: "quarterly",  price: "SAR 3,499" },
+  { id: "yearly",    duration: "yearly",     price: "SAR 5,499" },
+];
+
 const PackagesPage = ({ lang, setLang }) => {
   const t = translations[lang];
   const isRtl = t.dir === "rtl";
+
+  // Track page view on mount and language change
+  useEffect(() => {
+    trackPageView({ pageName: "packages", pagePath: "/packages", language: lang });
+  }, [lang]);
+
+  // Scroll depth milestones
+  useScrollDepth({ page: "packages", pagePath: "/packages", language: lang });
+
+  // Packages section view (fires once when cards container enters viewport)
+  const packagesSectionRef = useSectionView(EVENTS.PACKAGES_SECTION_VIEW, {
+    page: "packages",
+    language: lang,
+  });
+
+  // Card view tracking — one IntersectionObserver per card
+  const cardRefs = [useRef(null), useRef(null), useRef(null)];
+  const cardFired = useRef([false, false, false]);
+
+  useEffect(() => {
+    cardFired.current = [false, false, false]; // reset on lang change
+    const observers = cardRefs.map((ref, i) => {
+      if (!ref.current || typeof IntersectionObserver === "undefined") return null;
+      const obs = new IntersectionObserver(
+        ([entry]) => {
+          if (entry.isIntersecting && !cardFired.current[i]) {
+            cardFired.current[i] = true;
+            const meta = PLAN_META[i];
+            trackSectionView(EVENTS.PACKAGE_CARD_VIEW, {
+              page: "packages",
+              language: lang,
+            });
+            // Re-fire with richer params via trackEvent directly
+            import("../lib/analytics").then(({ trackEvent }) =>
+              trackEvent(EVENTS.PACKAGE_CARD_VIEW, {
+                package_id: meta.id,
+                package_name: t.packages.plans[i]?.name,
+                package_duration: meta.duration,
+                package_price: meta.price,
+                language: lang,
+              })
+            );
+          }
+        },
+        { threshold: 0.3 }
+      );
+      obs.observe(ref.current);
+      return obs;
+    });
+    return () => observers.forEach((o) => o?.disconnect());
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [lang]);
+
+  const handleBookNow = (i) => {
+    const meta = PLAN_META[i];
+    const plan = t.packages.plans[i];
+    // Store package context so the contact form can include it in the spreadsheet payload
+    setBookingContext({
+      sourcePage: "packages",
+      sourceSection: `package_${meta.id}`,
+      selectedPackage: plan.name,
+    });
+    trackButtonClick(PACKAGE_BOOK_NOW_EVENTS[i], {
+      language: lang,
+      section: `package_card_${meta.id}`,
+      page: "packages",
+      package_id: meta.id,
+      package_name: plan.name,
+      package_duration: meta.duration,
+      package_price: meta.price,
+    });
+    // Navigate to the booking form on the homepage
+    window.location.href = "/#contact";
+  };
 
   const scrollTo = (id) => {
     window.location.href = "/#" + id;
@@ -44,11 +130,14 @@ const PackagesPage = ({ lang, setLang }) => {
         </div>
 
         {/* ── Package cards ── */}
-        <div className="max-w-4xl mx-auto">
+        <div className="max-w-4xl mx-auto" ref={packagesSectionRef}>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-5 items-start">
             {t.packages.plans.map((plan, i) => (
               <Reveal key={i} delay={0.07 + i * 0.1}>
-                <div className={`relative ${plan.featured ? "md:-mt-5" : ""}`}>
+                <div
+                  ref={cardRefs[i]}
+                  className={`relative ${plan.featured ? "md:-mt-5" : ""}`}
+                >
                   {/* Most Popular badge */}
                   {plan.featured && (
                     <div className="absolute -top-4 inset-x-0 flex justify-center z-10">
@@ -138,11 +227,9 @@ const PackagesPage = ({ lang, setLang }) => {
                       ))}
                     </ul>
 
-                    {/* Book Now */}
-                    <motion.a
-                      href={WHATSAPP_LINK}
-                      target="_blank"
-                      rel="noreferrer"
+                    {/* Book Now — navigates to the homepage contact form */}
+                    <motion.button
+                      onClick={() => handleBookNow(i)}
                       whileHover={{ scale: 1.02 }}
                       whileTap={{ scale: 0.98 }}
                       className={`mt-7 w-full ${
@@ -157,7 +244,7 @@ const PackagesPage = ({ lang, setLang }) => {
                       ) : (
                         <ArrowRight size={15} />
                       )}
-                    </motion.a>
+                    </motion.button>
                   </div>
                 </div>
               </Reveal>

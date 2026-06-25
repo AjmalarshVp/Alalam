@@ -1,6 +1,8 @@
 import React, { useRef, useState } from "react";
 import { Reveal } from "../Reveal";
 import { ChevronsLeftRight } from "lucide-react";
+import { useSectionView } from "../../hooks/useSectionView";
+import { EVENTS } from "../../lib/analyticsEvents";
 
 const BEFORE =
   "https://images.unsplash.com/photo-1572557798994-41431698dc8d?crop=entropy&cs=srgb&fm=jpg&ixid=M3w4NjA2MDV8MHwxfHNlYXJjaHwzfHxhYnN0cmFjdCUyMHdhdGVyJTIwdGV4dHVyZSUyMGJsdWV8ZW58MHx8fHwxNzgyMzI0MDYzfDA&ixlib=rb-4.1.0&q=85";
@@ -10,6 +12,8 @@ const AFTER =
 const Results = ({ t }) => {
   const [pos, setPos] = useState(50);
   const ref = useRef(null);
+  const lang = document.documentElement.lang || "en";
+  const sectionRef = useSectionView(EVENTS.REAL_TRANSFORMATIONS_SECTION_VIEW, { page: "home", language: lang });
   const isRtl =
     typeof document !== "undefined" && document.body?.dir === "rtl";
 
@@ -22,7 +26,7 @@ const Results = ({ t }) => {
   };
 
   return (
-    <section data-testid="results-section" className="relative py-12 px-6">
+    <section ref={sectionRef} data-testid="results-section" className="relative py-12 px-6">
       <div className="max-w-md mx-auto">
         <Reveal>
           <span className="aa-overline left-only">{t.results.overline}</span>

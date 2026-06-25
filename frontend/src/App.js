@@ -1,9 +1,25 @@
 import React, { useEffect, useState } from "react";
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { BrowserRouter, Routes, Route, useLocation } from "react-router-dom";
 import { Toaster } from "sonner";
 import { translations } from "./lib/translations";
+import { trackReturnAfterOutbound } from "./lib/analytics";
 import HomePage from "./pages/HomePage";
 import PackagesPage from "./pages/PackagesPage";
+
+// Detects when a user returns to the site after clicking an outbound link.
+function OutboundReturnTracker({ lang }) {
+  useEffect(() => {
+    const handle = () => {
+      if (!document.hidden) {
+        const page = window.location.pathname === "/packages" ? "packages" : "home";
+        trackReturnAfterOutbound(page, lang);
+      }
+    };
+    document.addEventListener("visibilitychange", handle);
+    return () => document.removeEventListener("visibilitychange", handle);
+  }, [lang]);
+  return null;
+}
 
 function App() {
   const [lang, setLang] = useState("en");
@@ -28,6 +44,7 @@ function App() {
           },
         }}
       />
+      <OutboundReturnTracker lang={lang} />
       <Routes>
         <Route path="/" element={<HomePage lang={lang} setLang={setLang} />} />
         <Route path="/packages" element={<PackagesPage lang={lang} setLang={setLang} />} />

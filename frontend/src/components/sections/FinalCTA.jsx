@@ -2,10 +2,35 @@ import React from "react";
 import { Reveal } from "../Reveal";
 import { ArrowRight, MessageCircle } from "lucide-react";
 import { WHATSAPP_LINK } from "../../lib/translations";
+import { trackButtonClick, trackExternalLink } from "../../lib/analytics";
+import { useSectionView } from "../../hooks/useSectionView";
+import { setBookingContext } from "../../lib/bookingContext";
+import { EVENTS } from "../../lib/analyticsEvents";
 
 const FinalCTA = ({ t, scrollTo }) => {
+  const lang = document.documentElement.lang || "en";
+  const sectionRef = useSectionView(EVENTS.HOW_IT_WORKS_SECTION_VIEW, { page: "home", language: lang });
+
+  const handleBookNow = () => {
+    setBookingContext({ sourcePage: "home", sourceSection: "final_cta" });
+    trackButtonClick(EVENTS.FINAL_CTA_BOOK_NOW_CLICK, { language: lang, section: "final_cta", page: "home" });
+    scrollTo("contact");
+  };
+
+  const handleWhatsApp = () => {
+    trackExternalLink({
+      specificEvent: EVENTS.FINAL_CTA_WHATSAPP_CLICK,
+      linkName: "final_cta_whatsapp",
+      linkType: "whatsapp",
+      destinationDomain: "wa.me",
+      page: "home",
+      section: "final_cta",
+      language: lang,
+    });
+  };
+
   return (
-    <section data-testid="final-cta-section" className="relative py-8 px-6">
+    <section ref={sectionRef} data-testid="final-cta-section" className="relative py-8 px-6">
       <div className="max-w-md mx-auto">
         <Reveal>
           <div className="relative rounded-3xl overflow-hidden aa-glass p-7 aa-shimmer">
@@ -24,7 +49,7 @@ const FinalCTA = ({ t, scrollTo }) => {
               <div className="mt-6 flex flex-col gap-3">
                 <button
                   data-testid="final-cta-book"
-                  onClick={() => scrollTo("contact")}
+                  onClick={handleBookNow}
                   className="aa-btn-primary w-full"
                 >
                   {t.hero.ctaPrimary}
@@ -35,6 +60,7 @@ const FinalCTA = ({ t, scrollTo }) => {
                   target="_blank"
                   rel="noreferrer"
                   data-testid="final-cta-whatsapp"
+                  onClick={handleWhatsApp}
                   className="aa-btn-ghost w-full"
                 >
                   <MessageCircle size={16} />

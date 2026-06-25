@@ -1,34 +1,139 @@
-import React, { useState } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import { Reveal } from "../Reveal";
 import { ArrowRight, MessageCircle, CheckCircle2 } from "lucide-react";
 import { toast } from "sonner";
 import { WHATSAPP_LINK } from "../../lib/translations";
+import { trackFormEvent, trackExternalLink } from "../../lib/analytics";
+import { getBookingContext, clearBookingContext } from "../../lib/bookingContext";
+import { EVENTS } from "../../lib/analyticsEvents";
+
+// Google Sheets endpoint (same Apps Script used by the main branch)
+const SHEETS_URL = process.env.REACT_APP_SHEETS_URL;
+
+// Total trackable fields used for form-completion percentage
+const TOTAL_FIELDS = 4;
 
 const ContactForm = ({ t, lang }) => {
-  const [form, setForm] = useState({
-    name: "",
-    phone: "",
-    service: "",
-    message: "",
-  });
+  const [form, setForm] = useState({ name: "", phone: "", service: "", message: "" });
   const [submitting, setSubmitting] = useState(false);
   const [done, setDone] = useState(false);
+
+  // Refs track interaction state without causing re-renders
+  const formStarted = useRef(false);
+  const formSubmitted = useRef(false);
+  const lastField = useRef("");
+  const touchedFields = useRef(new Set());
 
   const onChange = (k) => (e) =>
     setForm((f) => ({ ...f, [k]: e.target.value }));
 
-  const submit = (e) => {
+  // Fire form-start event only once on the very first field interaction
+  const onFormStart = () => {
+    if (!formStarted.current) {
+      formStarted.current = true;
+      trackFormEvent(EVENTS.BOOKING_FORM_START, { language: lang, page: "home" });
+    }
+  };
+
+  // Per-field focus handlers — only the field name is sent, never the value
+  const onFieldFocus = (eventName, fieldKey) => {
+    onFormStart();
+    lastField.current = fieldKey;
+    touchedFields.current.add(fieldKey);
+    trackFormEvent(eventName, { language: lang, page: "home", fieldName: fieldKey });
+  };
+
+  // Track abandonment on unmount (route change) and browser unload
+  useEffect(() => {
+    const handleBeforeUnload = () => {
+      if (formStarted.current && !formSubmitted.current) {
+        const completionPct = Math.round((touchedFields.current.size / TOTAL_FIELDS) * 100);
+        trackFormEvent(EVENTS.BOOKING_FORM_ABANDON, {
+          language: lang,
+          page: "home",
+          lastField: lastField.current,
+          completionPct,
+        });
+      }
+    };
+    window.addEventListener("beforeunload", handleBeforeUnload);
+    return () => {
+      window.removeEventListener("beforeunload", handleBeforeUnload);
+      handleBeforeUnload(); // also fires on React route unmount
+    };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [lang]);
+
+  const submit = async (e) => {
     e.preventDefault();
+
     if (!form.name || !form.phone) {
       toast.error(lang === "ar" ? "يرجى إدخال الاسم والهاتف" : "Please fill name and phone");
+      trackFormEvent(EVENTS.BOOKING_FORM_VALIDATION_ERROR, {
+        language: lang,
+        page: "home",
+        fieldName: !form.name ? "name" : "phone",
+        errorType: "required_field_empty",
+      });
       return;
     }
+
     setSubmitting(true);
-    setTimeout(() => {
+
+    // Read non-sensitive booking context set by the Book Now button that was clicked
+    const ctx = getBookingContext();
+
+    // Payload mirrors the field structure used across the main branch's Sheets integration.
+    // email and city are empty strings to match existing spreadsheet columns.
+    // source_* fields provide context metadata for the spreadsheet without sending PII.
+    const payload = {
+      name: form.name,
+      phone: form.phone,
+      email: "",
+      service: form.service,
+      message: form.message,
+      city: "",
+      source_page: ctx.sourcePage || "home",
+      source_section: ctx.sourceSection || "contact_form",
+      selected_package: ctx.selectedPackage || "",
+    };
+
+    try {
+      await fetch(SHEETS_URL, {
+        method: "POST",
+        mode: "no-cors", // Apps Script does not return CORS headers; response is always opaque
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(payload),
+      });
+      // no-cors means the response is opaque — treat a resolved fetch as success
+      formSubmitted.current = true;
+      clearBookingContext();
       setSubmitting(false);
       setDone(true);
       toast.success(t.form.success);
-    }, 900);
+      trackFormEvent(EVENTS.BOOKING_FORM_SUBMIT_SUCCESS, { language: lang, page: "home" });
+    } catch {
+      // Network-level failure (no connection, script unavailable)
+      setSubmitting(false);
+      toast.error(lang === "ar" ? "حدث خطأ، يرجى المحاولة مجدداً" : "Something went wrong. Please try again.");
+      trackFormEvent(EVENTS.BOOKING_FORM_SUBMIT_ERROR, {
+        language: lang,
+        page: "home",
+        errorType: "network_error",
+      });
+    }
+  };
+
+  const handleWhatsApp = () => {
+    trackExternalLink({
+      specificEvent: "contact_form_whatsapp_click",
+      linkName: "contact_whatsapp",
+      linkType: "whatsapp",
+      destinationDomain: "wa.me",
+      page: "home",
+      section: "contact_form",
+      language: lang,
+    });
   };
 
   return (
@@ -80,6 +185,7 @@ const ContactForm = ({ t, lang }) => {
                       href={WHATSAPP_LINK}
                       target="_blank"
                       rel="noreferrer"
+                      onClick={handleWhatsApp}
                       className="text-[12.5px] text-cyan-300 mt-2 inline-flex items-center gap-1.5 hover:underline"
                     >
                       <MessageCircle size={13} />
@@ -94,6 +200,7 @@ const ContactForm = ({ t, lang }) => {
                     placeholder={t.form.name}
                     value={form.name}
                     onChange={onChange("name")}
+                    onFocus={() => onFieldFocus(EVENTS.BOOKING_FORM_NAME_FOCUS, "name")}
                   />
                   <Field
                     testid="form-phone"
@@ -101,11 +208,15 @@ const ContactForm = ({ t, lang }) => {
                     placeholder={t.form.phone}
                     value={form.phone}
                     onChange={onChange("phone")}
+                    onFocus={() => onFieldFocus(EVENTS.BOOKING_FORM_PHONE_FOCUS, "phone")}
                   />
                   <SelectField
                     testid="form-service"
                     value={form.service}
-                    onChange={onChange("service")}
+                    onChange={(e) => {
+                      onChange("service")(e);
+                      onFieldFocus(EVENTS.BOOKING_FORM_SERVICE_SELECT, "service");
+                    }}
                     placeholder={t.form.service}
                     options={t.services.list.map((s) => s.name)}
                     lang={lang}
@@ -116,6 +227,7 @@ const ContactForm = ({ t, lang }) => {
                     placeholder={t.form.message}
                     value={form.message}
                     onChange={onChange("message")}
+                    onFocus={() => onFieldFocus(EVENTS.BOOKING_FORM_MESSAGE_FOCUS, "message")}
                     className="w-full bg-white/[0.04] border border-white/10 rounded-xl px-4 py-3 text-[14px] text-white placeholder:text-slate-500 focus:outline-none focus:border-cyan-400/50 transition resize-none"
                   />
                   <button
@@ -133,6 +245,7 @@ const ContactForm = ({ t, lang }) => {
                     target="_blank"
                     rel="noreferrer"
                     data-testid="form-whatsapp"
+                    onClick={handleWhatsApp}
                     className="text-[12.5px] text-center text-slate-400 mt-1 hover:text-cyan-300 transition inline-flex items-center justify-center gap-1.5"
                   >
                     <MessageCircle size={13} />
@@ -148,10 +261,11 @@ const ContactForm = ({ t, lang }) => {
   );
 };
 
-const Field = ({ testid, type = "text", ...rest }) => (
+const Field = ({ testid, type = "text", onFocus, ...rest }) => (
   <input
     data-testid={testid}
     type={type}
+    onFocus={onFocus}
     {...rest}
     className="w-full bg-white/[0.04] border border-white/10 rounded-xl px-4 py-3 text-[14px] text-white placeholder:text-slate-500 focus:outline-none focus:border-cyan-400/50 transition"
   />

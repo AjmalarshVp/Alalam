@@ -1,9 +1,14 @@
 import React from "react";
 import { Reveal } from "../Reveal";
+import { useSectionView } from "../../hooks/useSectionView";
+import { EVENTS } from "../../lib/analyticsEvents";
 
 const Process = ({ t }) => {
+  const lang = document.documentElement.lang || "en";
+  const sectionRef = useSectionView(EVENTS.HOW_IT_WORKS_SECTION_VIEW, { page: "home", language: lang });
   return (
     <section
+      ref={sectionRef}
       data-testid="process-section"
       id="process"
       className="relative py-12 px-6 overflow-hidden"

@@ -11,6 +11,8 @@ import {
   Waves,
   ShieldCheck,
 } from "lucide-react";
+import { useSectionView } from "../../hooks/useSectionView";
+import { EVENTS } from "../../lib/analyticsEvents";
 
 const ICONS = [
   Droplets,
@@ -25,8 +27,11 @@ const ICONS = [
 ];
 
 const Services = ({ t, scrollTo }) => {
+  const lang = document.documentElement.lang || "en";
+  const sectionRef = useSectionView(EVENTS.SERVICES_SECTION_VIEW, { page: "home", language: lang });
   return (
     <section
+      ref={sectionRef}
       data-testid="services-section"
       id="services"
       className="relative py-12 px-6"
