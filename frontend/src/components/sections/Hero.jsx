@@ -142,32 +142,46 @@ const Hero = ({ t, scrollTo }) => {
           </span>
         </motion.div>
 
-        {/* Headline */}
+        {/* Headline — three-tier hierarchy */}
         <motion.h1
           data-testid="hero-headline"
           initial={{ opacity: 0, y: 22 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.9, delay: 0.12, ease: [0.22, 1, 0.36, 1] }}
-          className="font-display text-[40px] leading-[1.02] sm:text-[48px] font-medium text-white mt-7 sm:mt-4 tracking-tight"
-          style={{ textShadow: "0 4px 24px rgba(0,0,0,0.55)" }}
+          className="font-display tracking-tight mt-7 sm:mt-4"
         >
-          <span className="block">{t.hero.headline[0]}</span>
-          <span className="block">
-            <em className="not-italic bg-gradient-to-r from-[#A8F0FF] via-[#00E5FF] to-[#4FACFE] bg-clip-text text-transparent">
-              {t.hero.headline[1]}
-            </em>
+          {/* Tier 1: "30% OFF" — eye-catching deal line in cyan gradient */}
+          <span
+            className="block text-[34px] sm:text-[42px] leading-[1.0] font-bold bg-gradient-to-r from-[#A8F0FF] via-[#00E5FF] to-[#4FACFE] bg-clip-text text-transparent"
+          >
+            {t.hero.headline[0]}
           </span>
+
+          {/* Tier 2: "Instant Pool Cleaning" — primary, largest, most prominent */}
+          <span
+            className="block text-[42px] sm:text-[52px] leading-[1.01] font-medium text-white mt-0.5"
+            style={{ textShadow: "0 4px 28px rgba(0,0,0,0.65)" }}
+          >
+            {t.hero.headline[1]}
+          </span>
+
+          {/* Tier 3: "At Your Doorstep in 30 Minutes" — speed/trust tagline */}
           {t.hero.headline[2] && (
-            <span className="block">{t.hero.headline[2]}</span>
+            <span
+              className="block font-body text-[15.5px] sm:text-[18px] font-semibold text-cyan-100/90 mt-3 tracking-normal leading-snug"
+              style={{ textShadow: "0 2px 12px rgba(0,0,0,0.5)" }}
+            >
+              {t.hero.headline[2]}
+            </span>
           )}
         </motion.h1>
 
-        {/* Subtext */}
+        {/* Description */}
         <motion.p
           initial={{ opacity: 0, y: 14 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, delay: 0.28 }}
-          className="text-[13.5px] leading-relaxed text-slate-100/90 mt-3 max-w-[34ch]"
+          className="text-[13.5px] leading-relaxed text-slate-100/85 mt-4 max-w-[34ch]"
           style={{ textShadow: "0 2px 12px rgba(0,0,0,0.5)" }}
         >
           {t.hero.sub}

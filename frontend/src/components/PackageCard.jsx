@@ -8,7 +8,7 @@ import { motion } from "framer-motion";
 import {
   ArrowRight, ArrowLeft, Star, CheckCircle2,
   Calendar, Droplets, Waves, Wind, Paintbrush, Settings2,
-  Wrench, ShieldCheck, Zap, Sparkles, Activity,
+  Wrench, ShieldCheck, Zap, Sparkles, Activity, Timer,
 } from "lucide-react";
 
 export const PLAN_FEATURE_ICONS = [
@@ -29,9 +29,10 @@ export const PLAN_META = [
  * @param {boolean}  isRtl
  * @param {object}   t               – full translations[lang] object
  * @param {function} onBookNow       – called with (index)
- * @param {object}   [cardRef]       – optional ref for IntersectionObserver on packages page
- * @param {boolean}  [inCarousel]    – disables whileInView feature animations inside carousel
- * @param {boolean}  [isActive]      – carousel active state for shadow elevation
+ * @param {object}   [cardRef]            – optional ref for IntersectionObserver on packages page
+ * @param {boolean}  [inCarousel]         – disables whileInView feature animations inside carousel
+ * @param {boolean}  [isActive]           – carousel active state for shadow elevation
+ * @param {boolean}  [carouselHighlight]  – extra visual prominence for the hero card in carousel
  */
 const PlanCard = ({
   plan,
@@ -42,11 +43,22 @@ const PlanCard = ({
   cardRef = null,
   inCarousel = false,
   isActive = false,
+  carouselHighlight = false,
 }) => {
   const icons = PLAN_FEATURE_ICONS[index] || [];
   const isFeatured = plan.featured;
 
-  const cardStyle = isFeatured
+  // carouselHighlight overrides the card's own "featured" look with a strong cyan emphasis
+  const cardStyle = carouselHighlight
+    ? {
+        background:
+          "linear-gradient(180deg, rgba(0,229,255,0.12) 0%, rgba(79,172,254,0.05) 100%)",
+        borderColor: "rgba(0,229,255,0.65)",
+        boxShadow: isActive
+          ? "0 0 120px -18px rgba(0,229,255,0.6), inset 0 1px 0 rgba(0,229,255,0.25), 0 24px 64px -12px rgba(0,0,0,0.65)"
+          : "0 0 90px -22px rgba(0,229,255,0.45), inset 0 1px 0 rgba(0,229,255,0.18)",
+      }
+    : isFeatured
     ? {
         background:
           "linear-gradient(180deg, rgba(251,191,36,0.09) 0%, rgba(217,119,6,0.04) 100%)",
@@ -70,22 +82,40 @@ const PlanCard = ({
       }
     : { color: "#fff" };
 
-  const iconRingClass = isFeatured
-    ? "bg-amber-400/20 border-amber-300/40"
-    : "bg-cyan-400/20 border-cyan-300/40";
+  const iconRingClass =
+    carouselHighlight || !isFeatured
+      ? "bg-cyan-400/20 border-cyan-300/40"
+      : "bg-amber-400/20 border-amber-300/40";
 
-  const iconColor = isFeatured ? "text-amber-200" : "text-cyan-200";
+  const iconColor =
+    carouselHighlight || !isFeatured ? "text-cyan-200" : "text-amber-200";
 
   return (
     <div ref={cardRef} className="relative h-full">
+      {/* Fastest Service ribbon — carousel-only highlight for Instant Cleaning */}
+      {carouselHighlight && (
+        <div className="absolute -top-4 inset-x-0 flex justify-center z-10">
+          <span
+            className="inline-flex items-center gap-1.5 px-4 py-1.5 rounded-full text-[10px] font-bold uppercase tracking-[0.22em] text-[#04111F]"
+            style={{
+              background:
+                "linear-gradient(135deg, #A8F0FF 0%, #00E5FF 55%, #4FACFE 100%)",
+              boxShadow: "0 4px 20px -4px rgba(0,229,255,0.55)",
+            }}
+          >
+            <Timer size={9} />
+            {t.packages.fastestService}
+          </span>
+        </div>
+      )}
+
       {/* Most Popular ribbon */}
-      {isFeatured && (
+      {!carouselHighlight && isFeatured && (
         <div className="absolute -top-4 inset-x-0 flex justify-center z-10">
           <span
             className="inline-flex items-center gap-1.5 px-4 py-1.5 rounded-full text-[10px] font-bold uppercase tracking-[0.22em] text-[#1C0A00]"
             style={{
-              background:
-                "linear-gradient(135deg, #FDE68A 0%, #F59E0B 55%, #D97706 100%)",
+              background: "linear-gradient(135deg, #FDE68A 0%, #F59E0B 55%, #D97706 100%)",
               boxShadow: "0 4px 20px -4px rgba(251,191,36,0.5)",
             }}
           >
@@ -102,7 +132,7 @@ const PlanCard = ({
       >
         <span
           className={`text-[10px] font-bold uppercase tracking-[0.28em] ${
-            isFeatured ? "text-amber-400" : "text-cyan-400"
+            !carouselHighlight && isFeatured ? "text-amber-400" : "text-cyan-400"
           }`}
         >
           {plan.label}
@@ -162,10 +192,17 @@ const PlanCard = ({
           whileHover={{ scale: 1.025 }}
           whileTap={{ scale: 0.975 }}
           className={`mt-7 w-full flex items-center justify-center gap-2 font-semibold text-[14px] rounded-xl py-3 px-6 transition-all duration-200 ${
-            isFeatured ? "" : "aa-btn-ghost"
+            carouselHighlight || isFeatured ? "" : "aa-btn-ghost"
           }`}
           style={
-            isFeatured
+            carouselHighlight
+              ? {
+                  background:
+                    "linear-gradient(135deg, #A8F0FF 0%, #00E5FF 55%, #4FACFE 100%)",
+                  color: "#04111F",
+                  boxShadow: "0 4px 24px -6px rgba(0,229,255,0.55)",
+                }
+              : isFeatured
               ? {
                   background:
                     "linear-gradient(135deg, #FDE68A 0%, #F59E0B 55%, #D97706 100%)",

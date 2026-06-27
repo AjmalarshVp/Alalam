@@ -13,14 +13,25 @@ const AUTO_DELAY = 4500; // ms
 const SPRING = { type: "spring", stiffness: 280, damping: 32, mass: 0.8 };
 const EASE_WRAP = { duration: 0.55, ease: [0.4, 0, 0.2, 1] };
 
+// Instant Cleaning is at plans index 2 — this is the hero card in the carousel
+const CAROUSEL_HERO_INDEX = 2;
+
+const getInitialItemsPerView = () => {
+  if (typeof window === "undefined") return 1;
+  if (window.innerWidth >= 1024) return 3;
+  if (window.innerWidth >= 768) return 2;
+  return 1;
+};
+
 const PackagesCarousel = ({ lang, t }) => {
   const isRtl = t.dir === "rtl";
   const plans = t.packages.plans;
   const n = plans.length; // 3
 
-  // ── State ────────────────────────────────────────────────────────────────
-  const [index, setIndex] = useState(0);
-  const [itemsPerView, setItemsPerView] = useState(1);
+  // ── State — initialise so Instant Cleaning is the first card seen ────────
+  const [itemsPerView, setItemsPerView] = useState(getInitialItemsPerView);
+  const initialMaxIndex = Math.max(0, n - getInitialItemsPerView());
+  const [index, setIndex] = useState(Math.min(CAROUSEL_HERO_INDEX, initialMaxIndex));
   const [containerW, setContainerW] = useState(0);
   const [paused, setPaused] = useState(false);
 
@@ -30,12 +41,7 @@ const PackagesCarousel = ({ lang, t }) => {
 
   // ── Responsive items-per-view ─────────────────────────────────────────────
   useEffect(() => {
-    const update = () => {
-      if (window.innerWidth >= 1024) setItemsPerView(3);
-      else if (window.innerWidth >= 768) setItemsPerView(2);
-      else setItemsPerView(1);
-    };
-    update();
+    const update = () => setItemsPerView(getInitialItemsPerView());
     window.addEventListener("resize", update, { passive: true });
     return () => window.removeEventListener("resize", update);
   }, []);
@@ -191,28 +197,39 @@ const PackagesCarousel = ({ lang, t }) => {
           >
             {plans.map((plan, i) => {
               const isActive = i === index;
+              const isHero = i === CAROUSEL_HERO_INDEX;
+
+              // Scale logic:
+              //  hero active   → 1.06  (biggest — the star of the show)
+              //  hero inactive → 1.00  (still larger than regular inactive)
+              //  other active  → 0.98
+              //  other inactive→ 0.955
+              const scaleTarget = isHero
+                ? (isActive ? 1.06 : 1.0)
+                : (isActive ? 0.98 : 0.955);
+
               return (
                 <motion.div
                   key={i}
                   style={{ width: cardW, flexShrink: 0 }}
                   animate={{
-                    scale: isActive ? 1 : 0.965,
-                    y: isActive ? [0, -6, 0] : 0,
+                    scale: scaleTarget,
+                    y: isActive ? [0, -7, 0] : 0,
                   }}
                   transition={
                     isActive
                       ? {
-                          scale: { duration: 0.4, ease: "easeOut" },
+                          scale: { duration: 0.45, ease: "easeOut" },
                           y: {
                             repeat: Infinity,
                             repeatType: "loop",
-                            duration: 3.6,
+                            duration: isHero ? 3.2 : 3.6,
                             ease: "easeInOut",
                           },
                         }
-                      : { scale: { duration: 0.4, ease: "easeOut" }, y: { duration: 0.4 } }
+                      : { scale: { duration: 0.45, ease: "easeOut" }, y: { duration: 0.4 } }
                   }
-                  // Pad top so the ribbon badge (-top-4) isn't clipped
+                  // Extra top padding so the ribbon badge (-top-4) clears the overflow
                   className="pt-5"
                 >
                   <PlanCard
@@ -223,6 +240,7 @@ const PackagesCarousel = ({ lang, t }) => {
                     onBookNow={handleBookNow}
                     inCarousel
                     isActive={isActive}
+                    carouselHighlight={isHero}
                   />
                 </motion.div>
               );
