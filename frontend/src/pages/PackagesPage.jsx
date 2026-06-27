@@ -114,7 +114,7 @@ const PackagesPage = ({ lang, setLang }) => {
         <div className="max-w-5xl mx-auto" ref={packagesSectionRef}>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-5 items-stretch">
             {t.packages.plans.map((plan, i) => (
-              <Reveal key={i} delay={0.07 + i * 0.1}>
+              <Reveal key={i} delay={0.07 + i * 0.1} className="h-full">
                 <PlanCard
                   plan={plan}
                   index={i}
@@ -122,6 +122,7 @@ const PackagesPage = ({ lang, setLang }) => {
                   t={t}
                   cardRef={cardRefs[i]}
                   onBookNow={handleBookNow}
+                  carouselHighlight={i === 2}
                 />
               </Reveal>
             ))}

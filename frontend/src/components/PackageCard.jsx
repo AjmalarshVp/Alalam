@@ -90,8 +90,29 @@ const PlanCard = ({
   const iconColor =
     carouselHighlight || !isFeatured ? "text-cyan-200" : "text-amber-200";
 
+  // When used on the Packages page (inCarousel=false) the card animates itself —
+  // the carousel drives the same animation externally via its wrapper motion.div.
+  const floatActive = carouselHighlight && !inCarousel;
+
   return (
-    <div ref={cardRef} className="relative h-full">
+    <motion.div
+      ref={cardRef}
+      className="relative h-full"
+      animate={floatActive ? { y: [0, -7, 0] } : {}}
+      transition={
+        floatActive
+          ? {
+              y: {
+                repeat: Infinity,
+                repeatType: "loop",
+                duration: 3.2,
+                ease: "easeInOut",
+                delay: 0.9,
+              },
+            }
+          : {}
+      }
+    >
       {/* Fastest Service ribbon — carousel-only highlight for Instant Cleaning */}
       {carouselHighlight && (
         <div className="absolute -top-4 inset-x-0 flex justify-center z-10">
@@ -216,7 +237,7 @@ const PlanCard = ({
           {isRtl ? <ArrowLeft size={15} /> : <ArrowRight size={15} />}
         </motion.button>
       </div>
-    </div>
+    </motion.div>
   );
 };
 

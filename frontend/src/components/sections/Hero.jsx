@@ -10,7 +10,7 @@ import {
   Check,
   CalendarCheck,
 } from "lucide-react";
-import { WHATSAPP_LINK } from "../../lib/translations";
+import { WHATSAPP_LINK, WHATSAPP_NUMBER } from "../../lib/translations";
 import { trackButtonClick, trackExternalLink } from "../../lib/analytics";
 import { useSectionView } from "../../hooks/useSectionView";
 import { setBookingContext } from "../../lib/bookingContext";
@@ -35,7 +35,13 @@ const Hero = ({ t, scrollTo }) => {
     trackButtonClick(EVENTS.HERO_BOOK_NOW_CLICK, {
       language: lang, section: "hero", page: "home",
     });
-    scrollTo("contact");
+    const msg =
+      `Hello Al Alam Swimming Pools,\n\nI'd like to book an *Instant Pool Cleaning* service.\n\nPlease confirm availability and share the details.\n\nThank you.`;
+    window.open(
+      `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(msg)}`,
+      "_blank",
+      "noopener,noreferrer"
+    );
   };
 
   const handlePackages = () => {
@@ -234,23 +240,32 @@ const Hero = ({ t, scrollTo }) => {
           </button>
 
           <div className="grid grid-cols-2 gap-2.5">
+            {/* Packages — premium gold, matches Premium Care card */}
             <button
               data-testid="hero-cta-quote"
               onClick={handlePackages}
-              className="aa-btn-ghost !py-3 !text-[13px] w-full"
+              className="aa-btn-ghost !py-3 !text-[13px] w-full !border-[#D97706]/50"
+              style={{
+                background: "linear-gradient(135deg, #FDE68A 0%, #F59E0B 55%, #D97706 100%)",
+                color: "#1C0A00",
+                boxShadow: "0 4px 20px -6px rgba(251,191,36,0.45)",
+              }}
             >
               {t.hero.ctaSecondary}
             </button>
+
+            {/* WhatsApp — brand green */}
             <a
               data-testid="hero-cta-whatsapp"
               href={WHATSAPP_LINK}
               target="_blank"
               rel="noreferrer"
               onClick={handleWhatsApp}
-              className="aa-btn-ghost !py-3 !text-[13px] w-full"
+              className="aa-btn-ghost !py-3 !text-[13px] w-full !border-[#25D366]/50"
               style={{
-                borderColor: "rgba(37,211,102,0.45)",
-                color: "#9CE8B6",
+                background: "linear-gradient(135deg, #25D366 0%, #128C7E 100%)",
+                color: "#ffffff",
+                boxShadow: "0 4px 20px -6px rgba(37,211,102,0.45)",
               }}
             >
               <MessageCircle size={14} />

@@ -4,10 +4,8 @@ import { ChevronsLeftRight } from "lucide-react";
 import { useSectionView } from "../../hooks/useSectionView";
 import { EVENTS } from "../../lib/analyticsEvents";
 
-const BEFORE =
-  "https://images.unsplash.com/photo-1572557798994-41431698dc8d?crop=entropy&cs=srgb&fm=jpg&ixid=M3w4NjA2MDV8MHwxfHNlYXJjaHwzfHxhYnN0cmFjdCUyMHdhdGVyJTIwdGV4dHVyZSUyMGJsdWV8ZW58MHx8fHwxNzgyMzI0MDYzfDA&ixlib=rb-4.1.0&q=85";
-const AFTER =
-  "https://images.unsplash.com/photo-1727579674528-600120447183?crop=entropy&cs=srgb&fm=jpg&ixid=M3w4NjA1NzR8MHwxfHNlYXJjaHwzfHxsdXh1cnklMjBzd2ltbWluZyUyMHBvb2x8ZW58MHx8fHwxNzgyMzI0MDYzfDA&ixlib=rb-4.1.0&q=85";
+const BEFORE = "/Before.png";
+const AFTER = "/After.png";
 
 const Results = ({ t }) => {
   const [pos, setPos] = useState(50);
@@ -77,7 +75,7 @@ const Results = ({ t }) => {
                 src={BEFORE}
                 alt="Before"
                 loading="lazy"
-                className="absolute inset-0 w-full h-full object-cover saturate-[0.6] brightness-75"
+                className="absolute inset-0 w-full h-full object-cover"
               />
               <span className="absolute bottom-3 start-3 aa-glass-soft rounded-full px-3 py-1 text-[10px] uppercase tracking-[0.22em] text-cyan-200 font-semibold">
                 {t.results.beforeLabel}
