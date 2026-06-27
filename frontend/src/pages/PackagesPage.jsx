@@ -239,23 +239,6 @@ const PlanCard = ({ plan, index, isRtl, t, cardRef, onBookNow }) => {
         {/* Subtitle */}
         <p className="text-[12.5px] text-slate-400 mt-1">{plan.subtitle}</p>
 
-        {/* Billed Annually badge */}
-        {plan.billedAnnually && (
-          <span
-            className={`inline-flex items-center gap-1 mt-2.5 self-start px-2.5 py-1 rounded-full text-[10px] font-medium border ${
-              isFeatured
-                ? "border-amber-400/35 text-amber-300 bg-amber-400/[0.07]"
-                : "border-cyan-400/25 text-cyan-400 bg-cyan-400/[0.06]"
-            }`}
-          >
-            <span
-              className={`w-1.5 h-1.5 rounded-full shrink-0 ${
-                isFeatured ? "bg-amber-400" : "bg-cyan-400"
-              }`}
-            />
-            {t.packages.billedAnnually}
-          </span>
-        )}
 
         {/* Price */}
         <div className="mt-5">
