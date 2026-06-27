@@ -5,6 +5,7 @@ export const EVENTS = {
   // ── Page views ─────────────────────────────────────────────────────────────
   PAGE_VIEW_HOME: "page_view_home",
   PAGE_VIEW_PACKAGES: "page_view_packages",
+  PAGE_VIEW_CONTACT: "page_view_contact",
 
   // ── Hero section ────────────────────────────────────────────────────────────
   HERO_SECTION_VIEW: "hero_section_view",
@@ -50,6 +51,15 @@ export const EVENTS = {
   PACKAGE_MONTHLY_BOOK_NOW_CLICK: "package_monthly_book_now_click",
   PACKAGE_QUARTERLY_BOOK_NOW_CLICK: "package_quarterly_book_now_click",
   PACKAGE_YEARLY_BOOK_NOW_CLICK: "package_yearly_book_now_click",
+  PACKAGE_SELECTED: "package_selected",
+
+  // ── Contact page ─────────────────────────────────────────────────────────────
+  CONTACT_FORM_SUBMITTED: "contact_form_submitted",
+  CONTACT_FORM_SUBMIT_ERROR: "contact_form_submit_error",
+  CONTACT_FORM_START: "contact_form_start",
+  CONTACT_WHATSAPP_CLICK: "contact_whatsapp_click",
+  CONTACT_PHONE_CLICK: "contact_phone_click",
+  CONTACT_EMAIL_CLICK: "contact_email_click",
 
   // ── Booking form ─────────────────────────────────────────────────────────────
   BOOKING_FORM_START: "booking_form_start",

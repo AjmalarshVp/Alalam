@@ -5,13 +5,15 @@ import { translations } from "./lib/translations";
 import { trackReturnAfterOutbound } from "./lib/analytics";
 import HomePage from "./pages/HomePage";
 import PackagesPage from "./pages/PackagesPage";
+import ContactPage from "./pages/ContactPage";
 
 // Detects when a user returns to the site after clicking an outbound link.
 function OutboundReturnTracker({ lang }) {
   useEffect(() => {
     const handle = () => {
       if (!document.hidden) {
-        const page = window.location.pathname === "/packages" ? "packages" : "home";
+        const p = window.location.pathname;
+      const page = p === "/packages" ? "packages" : p === "/contact" ? "contact" : "home";
         trackReturnAfterOutbound(page, lang);
       }
     };
@@ -48,6 +50,7 @@ function App() {
       <Routes>
         <Route path="/" element={<HomePage lang={lang} setLang={setLang} />} />
         <Route path="/packages" element={<PackagesPage lang={lang} setLang={setLang} />} />
+        <Route path="/contact" element={<ContactPage lang={lang} setLang={setLang} />} />
       </Routes>
     </BrowserRouter>
   );

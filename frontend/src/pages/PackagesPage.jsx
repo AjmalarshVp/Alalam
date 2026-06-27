@@ -5,10 +5,9 @@ import {
   Calendar, Waves, Wind, Paintbrush, Settings2,
   Wrench, ShieldCheck, CheckCircle2, Zap, Sparkles, Activity,
 } from "lucide-react";
-import { translations } from "../lib/translations";
-import { trackPageView, trackButtonClick, trackSectionView } from "../lib/analytics";
-import { setBookingContext } from "../lib/bookingContext";
-import { EVENTS, PACKAGE_BOOK_NOW_EVENTS } from "../lib/analyticsEvents";
+import { translations, WHATSAPP_NUMBER } from "../lib/translations";
+import { trackPageView, trackSectionView, trackEvent } from "../lib/analytics";
+import { EVENTS } from "../lib/analyticsEvents";
 import { useScrollDepth } from "../hooks/useScrollDepth";
 import { useSectionView } from "../hooks/useSectionView";
 import Header from "../components/sections/Header";
@@ -82,21 +81,28 @@ const PackagesPage = ({ lang, setLang }) => {
   const handleBookNow = (i) => {
     const meta = PLAN_META[i];
     const plan = t.packages.plans[i];
-    setBookingContext({
-      sourcePage: "packages",
-      sourceSection: `package_${meta.id}`,
-      selectedPackage: plan.name,
-    });
-    trackButtonClick(PACKAGE_BOOK_NOW_EVENTS[i], {
-      language: lang,
-      section: `package_card_${meta.id}`,
-      page: "packages",
-      package_id: meta.id,
+
+    // Fire package_selected analytics event
+    trackEvent(EVENTS.PACKAGE_SELECTED, {
       package_name: plan.name,
-      package_duration: meta.duration,
+      package_type: meta.id,
       package_price: meta.price,
+      source_page: "packages",
+      timestamp: Date.now(),
+      language: lang,
     });
-    window.location.href = "/#contact";
+
+    // Build pre-filled WhatsApp message per plan
+    const isInstant = meta.id === "instant";
+    const msgBody = isInstant
+      ? `Hello Al Alam Swimming Pools,\n\nI'm interested in your *${plan.name}* service.\n\nPlease share more details and help me book the service.\n\nThank you.`
+      : `Hello Al Alam Swimming Pools,\n\nI'm interested in your *${plan.name}* package.\n\nPlease share more details and help me schedule my pool service.\n\nThank you.`;
+
+    window.open(
+      `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(msgBody)}`,
+      "_blank",
+      "noopener,noreferrer"
+    );
   };
 
   const scrollTo = (id) => {

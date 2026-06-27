@@ -1,8 +1,7 @@
-import React, { useState, useCallback, useEffect } from "react";
+import React, { useCallback, useEffect } from "react";
 import { translations } from "../lib/translations";
 import { trackPageView } from "../lib/analytics";
 import { useScrollDepth } from "../hooks/useScrollDepth";
-import WaterIntro from "../components/WaterIntro";
 import Header from "../components/sections/Header";
 import Hero from "../components/sections/Hero";
 import Services from "../components/sections/Services";
@@ -15,17 +14,12 @@ import FloatingWhatsApp from "../components/sections/FloatingWhatsApp";
 import { WaveDivider } from "../components/WaveDivider";
 
 const HomePage = ({ lang, setLang }) => {
-  const [introDone, setIntroDone] = useState(
-    typeof window !== "undefined" && sessionStorage.getItem("aa_intro") === "1"
-  );
   const t = translations[lang];
 
-  // Track page view once on mount and on language change
   useEffect(() => {
     trackPageView({ pageName: "home", pagePath: "/", language: lang });
   }, [lang]);
 
-  // Track scroll depth milestones
   useScrollDepth({ page: "home", pagePath: "/", language: lang });
 
   const scrollTo = useCallback((id) => {
@@ -33,16 +27,8 @@ const HomePage = ({ lang, setLang }) => {
     if (el) el.scrollIntoView({ behavior: "smooth", block: "start" });
   }, []);
 
-  const handleIntroDone = () => {
-    setIntroDone(true);
-    try {
-      sessionStorage.setItem("aa_intro", "1");
-    } catch {}
-  };
-
   return (
     <div className="min-h-screen bg-[#040B16] text-white font-body relative overflow-x-hidden">
-      {!introDone && <WaterIntro onDone={handleIntroDone} />}
       <Header lang={lang} setLang={setLang} t={t} scrollTo={scrollTo} />
       <main>
         <Hero t={t} scrollTo={scrollTo} />
