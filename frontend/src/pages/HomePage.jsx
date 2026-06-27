@@ -12,6 +12,7 @@ import FinalCTA from "../components/sections/FinalCTA";
 import Footer from "../components/sections/Footer";
 import FloatingWhatsApp from "../components/sections/FloatingWhatsApp";
 import { WaveDivider } from "../components/WaveDivider";
+import PackagesCarousel from "../components/sections/PackagesCarousel";
 
 const HomePage = ({ lang, setLang }) => {
   const t = translations[lang];
@@ -33,6 +34,8 @@ const HomePage = ({ lang, setLang }) => {
       <main>
         <Hero t={t} scrollTo={scrollTo} />
         <WaveDivider />
+        <PackagesCarousel lang={lang} t={t} />
+        <WaveDivider flip />
         <Services t={t} scrollTo={scrollTo} />
         <WaveDivider flip />
         <Process t={t} />
